@@ -25,6 +25,10 @@ def start_module():
     Returns:
         None
     """
+    title = "Human Resources Manager"
+    list_options = ["Show table", "Add new item", "Update item", "Remove item."]
+    exit_message = "Back to main menu"
+    print_menu(title, list_options, exit_message)
 
     # your code
 
