@@ -104,3 +104,21 @@ def print_error_message(message):
     """
 
     # your code
+
+def get_input_menu(menu_options):
+    """
+    Takes the integer as parameter = number of options in menu -1
+    Returns a input number if valid
+    """
+
+    verifier = True
+    while verifier:
+        try:
+            menu_choice = int(input('Choose an option from menu:'))
+        except TypeError:
+            print("Please choose a NUMBER.")
+        else:
+            if menu_number in range(menu_options):
+                return menu_choice
+            else:
+                print("Your choice is not on the list.")
