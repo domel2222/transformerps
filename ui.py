@@ -22,7 +22,9 @@ def print_table(table, title_list):
         None: This function doesn't return anything it only prints to console.
     """
 
-    # your goes code
+    print(title_list)
+    for row in table:
+        print (row)
 
 
 def print_result(result, label):
