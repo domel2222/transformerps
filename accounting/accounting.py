@@ -28,9 +28,10 @@ def start_module():
     Returns:
         None
     """
-
-    # you code
-
+    title = "Accounting"
+    list_options = ['Show table','Add new entry','Remove a record','Update specific record','Show year with the highest profit']
+    exit_message = "Go back to main menu"
+    print_menu(title, list_options, exit_message)
 
 def show_table(table):
     """
