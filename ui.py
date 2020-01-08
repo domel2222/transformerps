@@ -39,7 +39,8 @@ def print_result(result, label):
         None: This function doesn't return anything it only prints to console.
     """
 
-    # your code
+    # print(label)
+    # print(result)
 
 
 def print_menu(title, list_options, exit_message):
@@ -63,8 +64,10 @@ def print_menu(title, list_options, exit_message):
         None: This function doesn't return anything it only prints to console.
     """
 
-    # your code
-
+    print(title)
+    for index, option in enumerate(list_options):
+        print(f'\t({index + 1}) {option}')
+    print(f'\t(0) {exit_message}')
 
 def get_inputs(list_labels, title):
     """
@@ -118,7 +121,7 @@ def get_input_menu(menu_options):
         except TypeError:
             print("Please choose a NUMBER.")
         else:
-            if menu_number in range(menu_options):
+            if menu_choice in range(menu_options):
                 return menu_choice
             else:
                 print("Your choice is not on the list.")
