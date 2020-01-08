@@ -26,8 +26,34 @@ def start_module():
     Returns:
         None
     """
+    in_menu = True
 
-    # your code
+    while in_menu:
+        title = "CRM"
+        list_options = ['Show table','Add new entry','Remove a record','Update specific record','Show id of the customer with the longest name','Show customers who are subscribed to the newsletter']
+        exit_message = "Go back to main menu"
+        ui.print_menu(title, list_options, exit_message)
+        number_of_menu_options = 6
+        user_input = ui.get_input_menu(number_of_menu_options-1)
+        if user_input == 1:
+            # show_table(table)
+            show_table(data_manager.get_table_from_file("crm/customers.csv"))
+        elif user_input == 2:
+            add(table)
+        elif user_input == 3:
+            remove(table, id_)
+        elif user_input == 4:
+            update(table, id_)
+        elif user_input == 5:
+            get_longest_name_id(table)
+        elif user_input == 6:
+            get_subscribed_emails(table)
+        elif user_input == 0:
+            in_menu = False #dopóki jest w menu i prosi o input, dopóty nie dostanie 0 pętla się powtarza a jak się przerwie, user wychodzi itd. 
+    
+    main.main() #exit to the main menu
+
+
 
 
 def show_table(table):
@@ -40,8 +66,9 @@ def show_table(table):
     Returns:
         None
     """
-
-    # your code
+    title_list = ['id','name','email','subscribed']
+    ui.print_table(table, title_list)
+ 
 
 
 def add(table):
