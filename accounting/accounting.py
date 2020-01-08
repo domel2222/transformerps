@@ -35,7 +35,7 @@ def start_module():
         list_options = ['Show table','Add new entry','Remove a record','Update specific record','Show year with the highest profit','Show average profit per item in a given year']
         exit_message = "Go back to main menu"
         ui.print_menu(title, list_options, exit_message)
-        number_of_menu_options = 6
+        number_of_menu_options = 7
         user_input = ui.get_input_menu(number_of_menu_options-1)
         if user_input == 1:
             # show_table(table)
