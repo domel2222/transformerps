@@ -28,25 +28,29 @@ def start_module():
     Returns:
         None
     """
+    in_menu =  True
 
-    ui.print_menu("Inventory", ["Show Table", "Add", "Remove", "Update", "Get Available Items", "Get Average Durability By Manufacturers"], "Back to Main Menu")
-    number_of_menu_options = 6
-    user_input = ui.get_input_menu(number_of_menu_options-1) #asks user to select numbered option from the menu
-    if user_input == 1:
-        show_table(data_manager.get_table_from_file("transformerps/inventory/inventory.csv"))
-    elif user_input == 2:
-        add(table)
-    elif user_input == 3:
-        remove(table, id)
-    elif user_input == 4:
-        update(table, id)
-    elif user_input == 5:
-        get_available_items(table, id)
-    elif user_input == 6:
-        get_average_durability_by_manufacturers(table, id)
-    elif user_input == 0:
-        main.main() #exit to the main menu
-        pass
+    while in_menu:
+        ui.print_menu("Inventory", ["Show Table", "Add", "Remove", "Update", "Get Available Items", "Get Average Durability By Manufacturers"], "Back to Main Menu")
+        number_of_menu_options = 6
+        user_input = ui.get_input_menu(number_of_menu_options-1) #asks user to select numbered option from the menu
+        if user_input == 1:
+            show_table(data_manager.get_table_from_file("inventory/inventory.csv"))
+        elif user_input == 2:
+            add(table)
+        elif user_input == 3:
+            remove(table, id)
+        elif user_input == 4:
+            update(table, id)
+        elif user_input == 5:
+            get_available_items(table, id)
+        elif user_input == 6:
+            get_average_durability_by_manufacturers(table, id)
+        elif user_input == 0:
+            in_menu = False #dopóki jest w menu i prosi o input, dopóty nie dostanie 0 pętla się powtarza a jak się przerwie, user wychodzi itd. 
+    
+    main.main() #exit to the main menu
+
 
 
 def show_table(table):
@@ -75,7 +79,7 @@ def add(table):
     Returns:
         list: Table with a new record
     """
-    file_name = "transformerps/inventory/inventory.csv"
+    file_name = "inventory/inventory.csv"
     list_labels = ["Id:","Name:","Birth date:", "Manufacturer:", "Purchase Year:", "Durability:"]
     title = "Please provide data for new entry"
     table = ui.get_inputs(list_labels, title)
