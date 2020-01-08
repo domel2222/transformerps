@@ -32,8 +32,11 @@ def start_module():
     number_of_menu_options = 5
     user_input = ui.get_input_menu(number_of_menu_options-1) # the function asks for number of menu options - 1
     if user_input == 1:
-        show_table(data_manager.get_table_from_file("persons.csv"))
+        show_table(data_manager.get_table_from_file("hr/persons.csv"))
     elif user_input == 2:
+        list_labels = ["Code:","Name and Surname:","Birth date:"]
+        title = "Please provide data for new entry"
+        table = ui.get_inputs(list_labels, title)
         add(table)
     elif user_input == 3:
         remove(table, id_)
@@ -55,7 +58,7 @@ def show_table(table):
         None
     """
     
-    print_table(table, ["Code","Name and Surname","Birth date"])
+    ui.print_table(table, ["Code","Name and Surname","Birth date"])
     start_module()
 
 def add(table):
@@ -68,11 +71,10 @@ def add(table):
     Returns:
         list: Table with a new record
     """
-    file_name = "persons.csv"
-    list_labels = ["Code:","Name and Surname:","Birth date:"]
-    title = "Please provide data for new entry"
-    table = ui.get_inputs(list_labels, title)
-    data_manager.write_table_to_file(file_name, table)
+    file_name = "hr/persons.csv"
+    file_in_list_form = data_manager.get_table_from_file(file_name)
+    table_after_change = file_in_list_form + table
+    data_manager.write_table_to_file(file_name, table_after_change)
 
     return table #what for?
 
