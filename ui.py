@@ -24,7 +24,9 @@ def print_table(table, title_list):
 
     print(title_list)
     for row in table:
-        print (row)
+        for column in row:
+            print (column + " ", end="")
+            print('\n')
 
 
 def print_result(result, label):
@@ -100,7 +102,7 @@ def get_inputs(list_labels, title):
     inputs = []
     print (title)
     for item in list_labels:
-        user_input = input(f'{item}: ')
+        user_input = input(f'{item} ')
         inputs.append(user_input)
 
     return inputs
