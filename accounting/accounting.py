@@ -31,7 +31,9 @@ def start_module():
     title = "Accounting"
     list_options = ['Show table','Add new entry','Remove a record','Update specific record','Show year with the highest profit']
     exit_message = "Go back to main menu"
-    print_menu(title, list_options, exit_message)
+    ui.print_menu(title, list_options, exit_message)
+
+start_module()
 
 def show_table(table):
     """
@@ -43,8 +45,14 @@ def show_table(table):
     Returns:
         None
     """
-
+    file_name = "TW_week_5\transformerps\accounting\accounting.py"
+    # file_name = "accounting/items.csv"
+    data_manager.get_table_from_file(file_name)
+    title_list = ['id','month','day','year','type','amount']
+    ui.print_table(table, title_list)
     # your code
+
+# show_table(table)
 
 
 def add(table):
