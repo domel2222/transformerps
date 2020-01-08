@@ -28,7 +28,28 @@ def start_module():
         None
     """
 
-    # your code
+    in_menu =  True
+
+    while in_menu:
+        ui.print_menu("Store", ["Show Table", "Add", "Remove", "Update", "Get Counts By Manufacturers", "Get Average By Manufacturer"], "Back to Main Menu")
+        number_of_menu_options = 6
+        user_input = ui.get_input_menu(number_of_menu_options-1) #asks user to select numbered option from the menu
+        if user_input == 1:
+            show_table(data_manager.get_table_from_file("store/games.csv"))
+        elif user_input == 2:
+            add(table)
+        elif user_input == 3:
+            remove(table, id)
+        elif user_input == 4:
+            update(table, id)
+        elif user_input == 5:
+            get_counts_by_manufacturers(table, id)
+        elif user_input == 6:
+            get_average_by_manufacturer(table, id)
+        elif user_input == 0:
+            in_menu = False #dopóki jest w menu i prosi o input, dopóty nie dostanie 0 pętla się powtarza a jak się przerwie, user wychodzi itd. 
+    
+    main.main() #exit to the main menu
 
 
 def show_table(table):
@@ -42,7 +63,8 @@ def show_table(table):
         None
     """
 
-    # your code
+    title_list = ["Id", "Title", "Manufacturer", "Price", "In Stock"]
+    ui.print_table(table, title_list) #z UI tabelka
 
 
 def add(table):
