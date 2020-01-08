@@ -72,7 +72,7 @@ def add(table):
     Returns:
         list: Table with a new record
     """
-    file name = "inventory.csv"
+    file_name = "inventory.csv"
 
     # your code
 
