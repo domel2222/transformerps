@@ -29,7 +29,28 @@ def start_module():
         None
     """
 
-    # your code
+    in_menu =  True
+
+    while in_menu:
+        ui.print_menu("Sales", ["Show Table", "Add", "Remove", "Update", "Get Lowest Price Item Id", "Get Items Sold Between"], "Back to Main Menu")
+        number_of_menu_options = 6
+        user_input = ui.get_input_menu(number_of_menu_options-1) #asks user to select numbered option from the menu
+        if user_input == 1:
+            show_table(data_manager.get_table_from_file("sales/sales.csv"))
+        elif user_input == 2:
+            add(table)
+        elif user_input == 3:
+            remove(table, id)
+        elif user_input == 4:
+            update(table, id)
+        elif user_input == 5:
+            get_lowest_price_item_id(table, id)
+        elif user_input == 6:
+            get_items_sold_between(table, id)
+        elif user_input == 0:
+            in_menu = False #dopóki jest w menu i prosi o input, dopóty nie dostanie 0 pętla się powtarza a jak się przerwie, user wychodzi itd. 
+    
+    main.main() #exit to the main menu
 
 
 def show_table(table):
@@ -43,7 +64,8 @@ def show_table(table):
         None
     """
 
-    # your code
+    title_list = ["Id", "Title", "Price", "Month", "Day", "Year"]
+    ui.print_table(table, title_list) #z UI tabelka
 
 
 def add(table):
