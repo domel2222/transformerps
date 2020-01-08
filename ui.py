@@ -118,7 +118,7 @@ def get_input_menu(menu_options):
     while verifier:
         try:
             menu_choice = int(input('Choose an option from menu:'))
-        except TypeError:
+        except:
             print("Please choose a NUMBER.")
         else:
             if menu_choice in range(menu_options):
