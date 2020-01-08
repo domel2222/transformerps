@@ -17,6 +17,7 @@ import data_manager
 # common module
 import common
 
+import main
 
 def start_module():
     """
@@ -41,8 +42,10 @@ def start_module():
         update(table, id)
     elif user_input == 5:
         get_available_items(table, id)
-    elif user_input == 0:
+    elif user_input == 6:
         get_average_durability_by_manufacturers(table, id)
+    elif user_input == 0:
+        main.main() #exit to the main menu
     pass
 
 
@@ -56,7 +59,7 @@ def show_table(table):
     Returns:
         None
     """
-    file_name = "inventory/inventory.csv"
+    file_name = "transformerps/inventory/inventory.csv"
     data_manager.get_table_from_file(file_name)
     #print_table(table, ) ["Id", "Name", "Manufacturer", "Purchase Year", "Durability"]
     title_list = ["Id", "Name", "Manufacturer", "Purchase Year", "Durability"]
@@ -72,7 +75,7 @@ def add(table):
     Returns:
         list: Table with a new record
     """
-    file_name = "inventory.csv"
+    file_name = "inventory/inventory.csv"
 
     # your code
 
