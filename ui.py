@@ -110,8 +110,10 @@ def print_error_message(message):
 
 def get_input_menu(menu_options):
     """
-    Takes the integer as parameter = number of options in menu -1
-    Returns a input number if valid
+    Takes an integer as parameter = number of options in menu
+    Returns an input number if valid
+    This function is for all options - all normal functionalities and option 
+    "0" that exits to main Menu.
     """
 
     verifier = True
