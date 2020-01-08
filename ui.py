@@ -26,7 +26,7 @@ def print_table(table, title_list):
     for row in table:
         for column in row:
             print (column + " ", end="")
-            print('\n')
+        print('\n')
 
 
 def print_result(result, label):
