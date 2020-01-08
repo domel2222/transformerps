@@ -19,7 +19,6 @@ import data_manager
 import common
 
 
-
 def start_module():
     """
     Starts this module and displays its menu.
@@ -29,29 +28,32 @@ def start_module():
     Returns:
         None
     """
-    title = "Accounting"
-    list_options = ['Show table','Add new entry','Remove a record','Update specific record','Show year with the highest profit','Show average profit per item in a given year']
-    exit_message = "Go back to main menu"
-    ui.print_menu(title, list_options, exit_message)
-    number_of_menu_options = 6
-    user_input = ui.get_input_menu(number_of_menu_options-1)
-    if user_input == 1:
-        # show_table(table)
-        show_table(data_manager.get_table_from_file("accounting/items.csv"))
-    elif user_input == 2:
-        add(table)
-    elif user_input == 3:
-        remove(table, id_)
-    elif user_input == 4:
-        update(table, id_)
-    elif user_input == 5:
-        which_year_max(table)
-    elif user_input == 6:
-        avg_amount(table, year)
-    elif user_input == 0:
-        # main.main()
-        pass
+    in_menu = True
 
+    while in_menu:
+        title = "Accounting"
+        list_options = ['Show table','Add new entry','Remove a record','Update specific record','Show year with the highest profit','Show average profit per item in a given year']
+        exit_message = "Go back to main menu"
+        ui.print_menu(title, list_options, exit_message)
+        number_of_menu_options = 6
+        user_input = ui.get_input_menu(number_of_menu_options-1)
+        if user_input == 1:
+            # show_table(table)
+            show_table(data_manager.get_table_from_file("accounting/items.csv"))
+        elif user_input == 2:
+            add(table)
+        elif user_input == 3:
+            remove(table, id_)
+        elif user_input == 4:
+            update(table, id_)
+        elif user_input == 5:
+            which_year_max(table)
+        elif user_input == 6:
+            avg_amount(table, year)
+        elif user_input == 0:
+            in_menu = False #dopóki jest w menu i prosi o input, dopóty nie dostanie 0 pętla się powtarza a jak się przerwie, user wychodzi itd. 
+    
+    main.main() #exit to the main menu
 
 
 
