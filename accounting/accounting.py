@@ -18,7 +18,6 @@ import data_manager
 # common module
 import common
 
-import main
 
 
 def start_module():
@@ -34,10 +33,11 @@ def start_module():
     list_options = ['Show table','Add new entry','Remove a record','Update specific record','Show year with the highest profit','Show average profit per item in a given year']
     exit_message = "Go back to main menu"
     ui.print_menu(title, list_options, exit_message)
-    number_of_menu_options = 7
+    number_of_menu_options = 6
     user_input = ui.get_input_menu(number_of_menu_options-1)
     if user_input == 1:
-        show_table(table)
+        # show_table(table)
+        show_table(data_manager.get_table_from_file("accounting/items.csv"))
     elif user_input == 2:
         add(table)
     elif user_input == 3:
@@ -65,9 +65,10 @@ def show_table(table):
     Returns:
         None
     """
-    file_name = "transformerps\accounting\items.csv"
-    #file_name = "transformerps\accounting\items.csv"
-    data_manager.get_table_from_file(file_name)
+
+    # file_name = "accounting\items.csv"
+    # #file_name = "transformerps\accounting\items.csv"
+    # table = data_manager.get_table_from_file(file_name)
     title_list = ['id','month','day','year','type','amount']
     ui.print_table(table, title_list)
 
