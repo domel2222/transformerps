@@ -125,7 +125,7 @@ def print_error_message(message):
 def get_input_menu(menu_options):
     """
     Takes an integer as parameter = number of options in menu
-    Returns an input number if valid
+    Returns an input integer if valid
     This function is for all options - all normal functionalities and option 
     "0" that exits to main Menu.
     """
