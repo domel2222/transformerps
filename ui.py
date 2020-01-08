@@ -121,7 +121,7 @@ def get_input_menu(menu_options):
         except:
             print("Please choose a NUMBER.")
         else:
-            if menu_choice in range(menu_options):
+            if menu_choice in range(menu_options + 1):
                 return menu_choice
             else:
                 print("Your choice is not on the list.")
