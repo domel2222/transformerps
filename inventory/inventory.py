@@ -33,7 +33,7 @@ def start_module():
     number_of_menu_options = 6
     user_input = ui.get_input_menu(number_of_menu_options-1) #asks user to select numbered option from the menu
     if user_input == 1:
-        show_table(data_manager.get_table_from_file("inventory.csv"))
+        show_table(data_manager.get_table_from_file("transformerps/inventory/inventory.csv"))
     elif user_input == 2:
         add(table)
     elif user_input == 3:
@@ -46,7 +46,7 @@ def start_module():
         get_average_durability_by_manufacturers(table, id)
     elif user_input == 0:
         main.main() #exit to the main menu
-    pass
+        pass
 
 
 def show_table(table):
@@ -59,11 +59,11 @@ def show_table(table):
     Returns:
         None
     """
-    file_name = "transformerps/inventory/inventory.csv"
-    data_manager.get_table_from_file(file_name)
+    #file_name = "transformerps/inventory/inventory.csv"
+    #data_manager.get_table_from_file(file_name)
     #print_table(table, ) ["Id", "Name", "Manufacturer", "Purchase Year", "Durability"]
     title_list = ["Id", "Name", "Manufacturer", "Purchase Year", "Durability"]
-    ui.print_table(table,title_list) #z UI tabelka
+    ui.print_table(table, title_list) #z UI tabelka
 
 def add(table):
     """
@@ -75,9 +75,11 @@ def add(table):
     Returns:
         list: Table with a new record
     """
-    file_name = "inventory/inventory.csv"
-
-    # your code
+    file_name = "transformerps/inventory/inventory.csv"
+    list_labels = ["Id:","Name:","Birth date:", "Manufacturer:", "Purchase Year:", "Durability:"]
+    title = "Please provide data for new entry"
+    table = ui.get_inputs(list_labels, title)
+    data_manager.write_table_to_file(file_name, table)
 
     return table
 
