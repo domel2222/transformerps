@@ -26,11 +26,22 @@ def start_module():
         None
     """
     title = "Human Resources Manager"
-    list_options = ["Show table", "Add new item", "Update item", "Remove item."]
+    list_options = ["Show Table", "Add new item", "Update item", "Remove item."]
     exit_message = "Back to main menu"
     print_menu(title, list_options, exit_message)
-
-    # your code
+    number_of_menu_options = 5
+    user_input = get_input_menu(number_of_menu_options-1) # the function asks for number of menu options - 1
+    if user_input == 1:
+        show_table(get_table_from_file("persons.csv"))
+    elif user_input == 2:
+        add(table)
+    elif user_input == 3:
+        remove(table, id_)
+    elif user_input == 4:
+        update(table, id_)
+    elif user_input == 0:
+        pass
+         # how do i get back to main()?
 
 
 def show_table(table):
@@ -43,8 +54,7 @@ def show_table(table):
     Returns:
         None
     """
-
-    # your code
+    print_table(table, ["code","name","birth date"])
 
 
 def add(table):
