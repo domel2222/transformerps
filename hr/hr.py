@@ -28,7 +28,7 @@ def start_module():
     title = "Human Resources Manager"
     list_options = ["Show Table", "Add new item", "Update item", "Remove item."]
     exit_message = "Back to main menu"
-    print_menu(title, list_options, exit_message)
+    ui.print_menu(title, list_options, exit_message)
     number_of_menu_options = 5
     user_input = ui.get_input_menu(number_of_menu_options-1) # the function asks for number of menu options - 1
     if user_input == 1:

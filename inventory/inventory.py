@@ -143,4 +143,4 @@ def get_average_durability_by_manufacturers(table):
     """
 
     # your code
-start_module()
+# start_module()
