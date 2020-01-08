@@ -30,9 +30,9 @@ def start_module():
     exit_message = "Back to main menu"
     print_menu(title, list_options, exit_message)
     number_of_menu_options = 5
-    user_input = get_input_menu(number_of_menu_options-1) # the function asks for number of menu options - 1
+    user_input = ui.get_input_menu(number_of_menu_options-1) # the function asks for number of menu options - 1
     if user_input == 1:
-        show_table(get_table_from_file("persons.csv"))
+        show_table(data_manager.get_table_from_file("persons.csv"))
     elif user_input == 2:
         add(table)
     elif user_input == 3:
@@ -54,8 +54,9 @@ def show_table(table):
     Returns:
         None
     """
-    print_table(table, ["code","name","birth date"])
-
+    
+    print_table(table, ["Code","Name and Surname","Birth date"])
+    start_module()
 
 def add(table):
     """
@@ -67,10 +68,13 @@ def add(table):
     Returns:
         list: Table with a new record
     """
+    file_name = "persons.csv"
+    list_labels = ["Code:","Name and Surname:","Birth date:"]
+    title = "Please provide data for new entry"
+    table = ui.get_inputs(list_labels, title)
+    data_manager.write_table_to_file(file_name, table)
 
-    # your code
-
-    return table
+    return table #what for?
 
 
 def remove(table, id_):
