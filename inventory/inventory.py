@@ -19,24 +19,6 @@ import common
 
 
 def start_module():
-    ui.print_menu("Inventory", ["Show Table", "Add", "Remove", "Update", "Get Available Items", "Get Average Durability By Manufacturers"], "Back to Main Menu")
-    number_of_menu_options = 6
-    user_input = ui.get_input_menu(number_of_menu_options-1) #asks user to select numbered option from the menu
-    if user_input == 1:
-        show_table(data_manager.get_table_from_file("inventory.csv"))
-    elif user_input == 2:
-        add(table)
-    elif user_input == 3:
-        remove(table, id)
-    elif user_input == 4:
-        update(table, id)
-    elif user_input == 5:
-        get_available_items(table, id)
-    elif user_input == 0:
-        get_average_durability_by_manufacturers(table, id)
-    pass
-
-
     """
     Starts this module and displays its menu.
      * User can access default special features from here.
@@ -46,7 +28,22 @@ def start_module():
         None
     """
 
-    # your code
+    ui.print_menu("Inventory", ["Show Table", "Add", "Remove", "Update", "Get Available Items", "Get Average Durability By Manufacturers"], "Back to Main Menu")
+        number_of_menu_options = 6
+        user_input = ui.get_input_menu(number_of_menu_options-1) #asks user to select numbered option from the menu
+        if user_input == 1:
+            show_table(data_manager.get_table_from_file("inventory.csv"))
+        elif user_input == 2:
+            add(table)
+        elif user_input == 3:
+            remove(table, id)
+        elif user_input == 4:
+            update(table, id)
+        elif user_input == 5:
+            get_available_items(table, id)
+        elif user_input == 0:
+            get_average_durability_by_manufacturers(table, id)
+        pass
 
 
 def show_table(table):
@@ -59,9 +56,8 @@ def show_table(table):
     Returns:
         None
     """
-
-    # your code
-
+    print_table(table, ["Id", "Name", "Manufacturer", "Purchase Year", "Durability"])
+    start_module()
 
 def add(table):
     """
@@ -73,6 +69,7 @@ def add(table):
     Returns:
         list: Table with a new record
     """
+    file name = "inventory.csv"
 
     # your code
 
@@ -143,4 +140,3 @@ def get_average_durability_by_manufacturers(table):
     """
 
     # your code
-start_module()
