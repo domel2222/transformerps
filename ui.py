@@ -40,7 +40,16 @@ def print_result(result, label):
     """
 
     print(label)
-    print(result)
+    if type(result) == str or type(result) == int:
+        print(result)
+    elif type(result) == list:
+        for item in result:
+            print(item + " | ", end="")
+    elif type(result) == dict:
+        for key, value in result.items():
+            print(str(key) + ": " + str(value))
+    else:
+        print("I can't process this type of data")
 
 
 def print_menu(title, list_options, exit_message):

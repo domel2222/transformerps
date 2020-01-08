@@ -56,8 +56,11 @@ def show_table(table):
     Returns:
         None
     """
-    print_table(table, ["Id", "Name", "Manufacturer", "Purchase Year", "Durability"])
-    start_module()
+    file_name = "inventory/inventory.csv"
+    data_manager.get_table_from_file(file_name)
+    #print_table(table, ) ["Id", "Name", "Manufacturer", "Purchase Year", "Durability"]
+    title_list = ["Id", "Name", "Manufacturer", "Purchase Year", "Durability"]
+    ui.print_table(table,title_list) #z UI tabelka
 
 def add(table):
     """
@@ -69,7 +72,7 @@ def add(table):
     Returns:
         list: Table with a new record
     """
-    file name = "inventory.csv"
+    file_name = "inventory.csv"
 
     # your code
 

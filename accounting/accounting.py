@@ -29,11 +29,30 @@ def start_module():
         None
     """
     title = "Accounting"
-    list_options = ['Show table','Add new entry','Remove a record','Update specific record','Show year with the highest profit']
+    list_options = ['Show table','Add new entry','Remove a record','Update specific record','Show year with the highest profit','Show average profit per item in a given year']
     exit_message = "Go back to main menu"
     ui.print_menu(title, list_options, exit_message)
+    number_of_menu_options = 7
+    user_input = ui.get_input_menu(number_of_menu_options-1)
+    if user_input == "1":
+        show_table(table)
+    elif user_input == "2":
+        add(table)
+    elif user_input == "3":
+        remove(table, id_)
+    elif user_input == "4":
+        update(table, id_)
+    elif user_input == "5":
+        which_year_max(table)
+    elif user_input == "6":
+        avg_amount(table, year)
+    elif user_input == "0":
+        # sys.exit(0)
+        # how to go back to main menu?
+        pass
 
-start_module()
+    start_module()
+
 
 def show_table(table):
     """
@@ -45,14 +64,12 @@ def show_table(table):
     Returns:
         None
     """
-    file_name = "TW_week_5\transformerps\accounting\accounting.py"
-    # file_name = "accounting/items.csv"
+    file_name = "transformerps\accounting\items.csv"
     data_manager.get_table_from_file(file_name)
     title_list = ['id','month','day','year','type','amount']
     ui.print_table(table, title_list)
-    # your code
 
-# show_table(table)
+    show_table(table)
 
 
 def add(table):
