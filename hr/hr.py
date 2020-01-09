@@ -103,9 +103,7 @@ def remove(table, id):
     for entry in table:
         entry = str(entry[0])
         entry_in_list_form = entry.split(",")
-        print(entry_in_list_form[0]) #<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<test
         if entry_in_list_form[0] == id[0]:
-            print("yes")#<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<test
             new_table = table[:count] + table[count+1:]
             data_manager.write_table_to_file(file_name, new_table)
         count += 1
@@ -132,30 +130,25 @@ def update(table, id):
         entry = str(entry[0])
         entry_in_list_form = entry.split(",")
         if entry_in_list_form[0] == id[0]:
-            print("yes")#<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<test
             #chosen_parameter = "" <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<error handling
             #while chosen_parameter != "Name" or chosen_parameter != "Date":
             list_labels = ":"
             title = "which parameter do you want to change? (Name/Date)"
             chosen_parameter_list = ui.get_inputs(list_labels, title)
             chosen_parameter = chosen_parameter_list[0]
-            print(chosen_parameter)#<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
             if chosen_parameter == "Name":
                 list_labels = ":"
                 title = "New Name and Surname"
                 new_name = ui.get_inputs(list_labels, title)[0]
                 modified_entry = entry_in_list_form[0] + "," + new_name + "," + entry_in_list_form[2]
-                print(modified_entry)
                 new_table = table[:count] + [[modified_entry]] + table[count+1:]
-                print(new_table)
                 data_manager.write_table_to_file(file_name, new_table)
             if chosen_parameter == "Date":
                 list_labels = ":"
                 title = "New Date of Birth"
                 new_date_of_birth = ui.get_inputs(list_labels, title)[0]
                 modified_entry = entry_in_list_form[0] + "," + entry_in_list_form[2] + "," + new_date_of_birth
-                new_table = table[:count] + [[modified_entry]] + table[count+1:]
-                print(new_table)            
+                new_table = table[:count] + [[modified_entry]] + table[count+1:]        
                 data_manager.write_table_to_file(file_name, new_table)
         count += 1
     start_module()
