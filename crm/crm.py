@@ -32,11 +32,13 @@ def start_module():
     exit_message = "Go back to main menu"
     ui.print_menu(title, list_options, exit_message)
     number_of_menu_options = 7
+    file_name = "crm\customers.csv"
     user_input = ui.get_input_menu(number_of_menu_options-1)
     if user_input == 1:
-        show_table(data_manager.get_table_from_file("crm/customers.csv"))
+        show_table(data_manager.get_table_from_file("crm\customers.csv"))
     elif user_input == 2:
-        add(table)
+        file_in_list_form = data_manager.get_table_from_file(file_name)
+        add(file_in_list_form)
     elif user_input == 3:
         remove(table, id_)
     elif user_input == 4:
@@ -77,8 +79,10 @@ def add(table):
         list: Table with a new record
     """
     file_name = "crm/customers.csv"
-    file_in_list_form = data_manager.get_table_from_file(file_name)
-    table_after_change = file_in_list_form + [[",".join(table)]]
+    list_labels = ['Id:','Name:','Email:','Subscribed:']
+    title = "Please provide data for new entry"
+    new_entry = ui.get_inputs(list_labels, title)
+    table_after_change = table + [[",".join(new_entry)]]
     data_manager.write_table_to_file(file_name, table_after_change)
     start_module()
 
