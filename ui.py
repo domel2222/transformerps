@@ -21,30 +21,38 @@ def print_table(table, title_list):
     Returns:
         None: This function doesn't return anything it only prints to console.
     """
-
+    # print(table)
     table.insert(0, title_list)
-    temp_table = []
-    for item in table:
-        rej = ','.join(item)
-        rej_tab = rej.split(',')
-        temp_table.append(rej_tab)
-    
+    # print(table)
+    # temp_table = []
+    # for item in table:
+    #     rej = ';'.join(item)
+    #     rej_tab = rej.split(';')
+    #     temp_table.append(rej_tab)
+    # print(table)
+    # print(temp_table)
     columns_width = []
 
     # getting column width for a table
     for column in range(len(title_list)):
         max = 0
-        for record in range(len(temp_table)):
+        for record in range(len(table)):
             
-            if len(temp_table[record][column]) >= max:
-                max = len(temp_table[record][column])    
+            if len(table[record][column]) >= max:
+                max = len(table[record][column])    
             
         columns_width.append(max)
 
-    for position in temp_table:
+    table_width = len(columns_width)
+    for item in columns_width:
+        table_width += item
+
+    print('\n',"-"*table_width)
+    for position in table:
+        print("|", end="")
         for position_index, column in enumerate(position):
             print("{0:^{1}}".format(column, columns_width[position_index]), end ="|")
-        print()
+        print('\n',"-"*table_width)
 
     # print(title_list)
     # for row in table:
