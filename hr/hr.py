@@ -39,7 +39,6 @@ def start_module():
         new_entry = ui.get_inputs(list_labels, title)
         add(new_entry)
     elif user_input == 3:
-        table = 
         remove(table, id_)
     elif user_input == 4:
         update(table, id_)
