@@ -36,9 +36,10 @@ def start_module():
     elif user_input == 2:
         list_labels = ["Code:","Name and Surname:","Birth date:"]
         title = "Please provide data for new entry"
-        table = ui.get_inputs(list_labels, title)
-        add(table)
+        new_entry = ui.get_inputs(list_labels, title)
+        add(new_entry)
     elif user_input == 3:
+        table = 
         remove(table, id_)
     elif user_input == 4:
         update(table, id_)
@@ -73,10 +74,10 @@ def add(table):
     """
     file_name = "hr/persons.csv"
     file_in_list_form = data_manager.get_table_from_file(file_name)
-    table_after_change = file_in_list_form + [[",".join(table)]]
+    table_after_change = file_in_list_form + [[",".join(new_entry)]]
     data_manager.write_table_to_file(file_name, table_after_change)
     start_module()
-    return table #what for?
+    #return table #what for?<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<change
 
 
 def remove(table, id_):
@@ -91,7 +92,7 @@ def remove(table, id_):
         list: Table without specified record.
     """
     
-    # your code
+    
 
     return table
 
