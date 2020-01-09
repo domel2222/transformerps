@@ -33,6 +33,7 @@ def start_module():
     while in_menu:
         ui.print_menu("Store", ["Show Table", "Add", "Remove", "Update", "Get Counts By Manufacturers", "Get Average By Manufacturer"], "Back to Main Menu")
         number_of_menu_options = 6
+        file_name = "store/games.csv" 
         user_input = ui.get_input_menu(number_of_menu_options-1) #asks user to select numbered option from the menu
         if user_input == 1:
             show_table(data_manager.get_table_from_file("store/games.csv"))
@@ -42,7 +43,11 @@ def start_module():
             added_to_table = ui.get_inputs(title_list, callout)
             add(added_to_table)
         elif user_input == 3:
-            remove(table, id)
+            file_in_list_form = data_manager.get_table_from_file(file_name)
+            title = "Please provide Id of entry to be removed"
+            list_labels = ":"
+            id_to_be_removed = ui.get_inputs(list_labels, title)
+            remove(file_in_list_form, id_to_be_removed)
         elif user_input == 4:
             update(table, id)
         elif user_input == 5:
@@ -87,7 +92,7 @@ def add(table):
     return table
 
 
-def remove(table, id_):
+def remove(table, id):
     """
     Remove a record with a given id from the table.
 
@@ -98,10 +103,18 @@ def remove(table, id_):
     Returns:
         list: Table without specified record.
     """
+    file_name = "store/games.csv"
+    count = 0
+    for entry in table:
+        entry = str(entry[0])
+        entry_in_list_form = entry.split(",")
+        if entry_in_list_form[0] == id[0]:
+            new_table = table[:count] + table[count+1:]
+            data_manager.write_table_to_file(file_name, new_table)
+        count += 1
+    start_module()
 
-    # your code
-
-    return table
+    #return table<<<<<<<<<<<<<<<<<<<<<<<<<why?
 
 
 def update(table, id_):
