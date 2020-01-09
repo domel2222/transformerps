@@ -37,7 +37,10 @@ def start_module():
         if user_input == 1:
             show_table(data_manager.get_table_from_file("inventory/inventory.csv"))
         elif user_input == 2:
-            add(table)
+            title_list = ["Id: ", "Name: ", "Manufacturer: ", "Purchase Year: ", "Durability: "]
+            callout = "Please provide data for new entry"
+            added_to_table = ui.get_inputs(title_list, callout)
+            add(added_to_table)
         elif user_input == 3:
             remove(table, id)
         elif user_input == 4:
@@ -63,11 +66,7 @@ def show_table(table):
     Returns:
         None
     """
-    #file_name = "transformerps/inventory/inventory.csv"
-    #data_manager.get_table_from_file(file_name)
-    #print_table(table, ) ["Id", "Name", "Manufacturer", "Purchase Year", "Durability"]
-    title_list = ["Id", "Name", "Manufacturer", "Purchase Year", "Durability"]
-    ui.print_table(table, title_list) #z UI tabelka
+    ui.print_table(table, ["Id", "Name", "Manufacturer", "Purchase Year", "Durability"]) #z UI tabelka
 
 def add(table):
     """
@@ -80,10 +79,9 @@ def add(table):
         list: Table with a new record
     """
     file_name = "inventory/inventory.csv"
-    list_labels = ["Id:","Name:","Birth date:", "Manufacturer:", "Purchase Year:", "Durability:"]
-    title = "Please provide data for new entry"
-    table = ui.get_inputs(list_labels, title)
-    data_manager.write_table_to_file(file_name, table)
+    file_in_list_form = data_manager.get_table_from_file(file_name)
+    added_to_table = file_in_list_form + [[",".join(table)]] #nowy wpis
+    data_manager.write_table_to_file(file_name, added_to_table)
 
     return table
 

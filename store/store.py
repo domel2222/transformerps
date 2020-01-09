@@ -37,7 +37,10 @@ def start_module():
         if user_input == 1:
             show_table(data_manager.get_table_from_file("store/games.csv"))
         elif user_input == 2:
-            add(table)
+            title_list = ["Id", "Title", "Manufacturer", "Price", "In Stock"]
+            callout = "Please provide data for new entry"
+            added_to_table = ui.get_inputs(title_list, callout)
+            add(added_to_table)
         elif user_input == 3:
             remove(table, id)
         elif user_input == 4:
@@ -78,7 +81,10 @@ def add(table):
         list: Table with a new record
     """
 
-    # your code
+    file_name = "store/games.csv"
+    file_in_list_form = data_manager.get_table_from_file(file_name)
+    added_to_table = file_in_list_form + [[",".join(table)]] #nowy wpis
+    data_manager.write_table_to_file(file_name, added_to_table)
 
     return table
 
