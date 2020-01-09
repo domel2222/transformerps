@@ -70,7 +70,7 @@ def show_table(table):
         None
     """
 
-    file_name = "accounting\items.csv"
+    file_name = "accounting/items.csv"
     table = data_manager.get_table_from_file(file_name)
     title_list = ['id','month','day','year','type','amount']
     ui.print_table(table, title_list)
@@ -103,15 +103,11 @@ def remove(table, id_):
     Returns:
         list: Table without specified record.
     """
-    file_name = "accounting\items.csv"
+    file_name = "accounting/items.csv"
 
     for row in table:
         if str(row[0]) == str(id_[0]):
-            print(str(row[0]))
-            print(str(id_[0]))
-            print('yes')
             table.remove(row)
-            print(table)
         else:
             pass
 
