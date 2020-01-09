@@ -40,14 +40,11 @@ def start_module():
     elif user_input == 2:
         add(table)
     elif user_input == 3:
-        # show_table(data_manager.get_table_from_file("accounting/items.csv"))
         table = data_manager.get_table_from_file("accounting/items.csv")
-        print(table)
         list_labels = ['ID:']
         title = "Please provide the ID to be removed"
         id_ = ui.get_inputs(list_labels, title)
         remove(table, id_)
-        print(id_) #test
     elif user_input == 4:
         update(table, id_)
     elif user_input == 5:
@@ -74,7 +71,7 @@ def show_table(table):
     table = data_manager.get_table_from_file(file_name)
     title_list = ['id','month','day','year','type','amount']
     ui.print_table(table, title_list)
-    start_module()
+
 
 def add(table):
     """
@@ -103,7 +100,10 @@ def remove(table, id_):
     Returns:
         list: Table without specified record.
     """
+    #in the future, display the table when calling the function remove
+    
     file_name = "accounting/items.csv"
+    show_table(table)
 
     for row in table:
         if str(row[0]) == str(id_[0]):
