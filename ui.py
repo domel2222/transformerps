@@ -41,9 +41,6 @@ def print_table(table, title_list):
             
         columns_width.append(max)
 
-    print(temp_table)
-    print(columns_width)
-
     for position in temp_table:
         for position_index, column in enumerate(position):
             print("{0:^{1}}".format(column, columns_width[position_index]), end ="|")
