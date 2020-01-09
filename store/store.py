@@ -81,7 +81,7 @@ def add(table):
 
     file_name = "store/games.csv"
     file_in_list_form = data_manager.get_table_from_file(file_name)
-    added_to_table = file_in_list_form + [[",".join(table)]] #nowy wpis
+    added_to_table = file_in_list_form + [[";".join(table)]] #nowy wpis
     data_manager.write_table_to_file(file_name, added_to_table)
 
     return table
