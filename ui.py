@@ -22,11 +22,38 @@ def print_table(table, title_list):
         None: This function doesn't return anything it only prints to console.
     """
 
-    print(title_list)
-    for row in table:
-        for column in row:
-            print (column + " ", end="")
-        print('\n')
+    table.insert(0, title_list)
+    temp_table = []
+    for item in table:
+        rej = ','.join(item)
+        rej_tab = rej.split(',')
+        temp_table.append(rej_tab)
+    
+    columns_width = []
+
+    # getting column width for a table
+    for column in range(len(title_list)):
+        max = 0
+        for record in range(len(temp_table)):
+            
+            if len(temp_table[record][column]) >= max:
+                max = len(temp_table[record][column])    
+            
+        columns_width.append(max)
+
+    print(temp_table)
+    print(columns_width)
+
+    for position in temp_table:
+        for position_index, column in enumerate(position):
+            print("{0:^{1}}".format(column, columns_width[position_index]), end ="|")
+        print()
+
+    # print(title_list)
+    # for row in table:
+    #     for column in row:
+    #         print (column + " ", end="")
+    #     print('\n')
 
 
 def print_result(result, label):
@@ -133,7 +160,7 @@ def get_input_menu(menu_options):
     verifier = True
     while verifier:
         try:
-            menu_choice = int(input('Choose an option from menu:'))
+            menu_choice = int(input('Choose an option from menu: '))
         except:
             print("Please choose a NUMBER.")
         else:
