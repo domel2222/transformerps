@@ -51,8 +51,6 @@ def start_module():
             get_average_by_manufacturer(table, id)
         elif user_input == 0:
             in_menu = False #dopóki jest w menu i prosi o input, dopóty nie dostanie 0 pętla się powtarza a jak się przerwie, user wychodzi itd. 
-    
-    main.main() #exit to the main menu
 
 
 def show_table(table):

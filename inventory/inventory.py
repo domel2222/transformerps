@@ -50,7 +50,7 @@ def start_module():
         elif user_input == 6:
             get_average_durability_by_manufacturers(table, id)
         elif user_input == 0:
-            in_menu = False #dopóki jest w menu i prosi o input, dopóty nie dostanie 0 pętla się powtarza a jak się przerwie, user wychodzi itd. 
+            in_menu = False #jest w menu i prosi o input, jeśli nie dostanie 0 pętla się powtarza a jak się przerwie, user wychodzi itd. 
     
     main.main() #exit to the main menu
 
