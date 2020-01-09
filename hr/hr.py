@@ -75,7 +75,7 @@ def add(table):
     file_in_list_form = data_manager.get_table_from_file(file_name)
     table_after_change = file_in_list_form + [[",".join(table)]]
     data_manager.write_table_to_file(file_name, table_after_change)
-
+    start_module()
     return table #what for?
 
 
@@ -90,7 +90,7 @@ def remove(table, id_):
     Returns:
         list: Table without specified record.
     """
-
+    
     # your code
 
     return table
