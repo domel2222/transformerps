@@ -28,32 +28,34 @@ def start_module():
     Returns:
         None
     """
-    in_menu = True
 
-    while in_menu:
-        title = "Accounting"
-        list_options = ['Show table','Add new entry','Remove a record','Update specific record','Show year with the highest profit','Show average profit per item in a given year']
-        exit_message = "Go back to main menu"
-        ui.print_menu(title, list_options, exit_message)
-        number_of_menu_options = 7
-        user_input = ui.get_input_menu(number_of_menu_options-1)
-        if user_input == 1:
-            # show_table(table)
-            show_table(data_manager.get_table_from_file("accounting/items.csv"))
-        elif user_input == 2:
-            add(table)
-        elif user_input == 3:
-            remove(table, id_)
-        elif user_input == 4:
-            update(table, id_)
-        elif user_input == 5:
-            which_year_max(table)
-        elif user_input == 6:
-            avg_amount(table, year)
-        elif user_input == 0:
-            in_menu = False #dopóki jest w menu i prosi o input, dopóty nie dostanie 0 pętla się powtarza a jak się przerwie, user wychodzi itd. 
-    
-    main.main() #exit to the main menu
+    title = "Accounting"
+    list_options = ['Show table','Add new entry','Remove a record','Update specific record','Show year with the highest profit','Show average profit per item in a given year']
+    exit_message = "Go back to main menu"
+    ui.print_menu(title, list_options, exit_message)
+    number_of_menu_options = 7
+    user_input = ui.get_input_menu(number_of_menu_options-1)
+    if user_input == 1:
+        show_table(data_manager.get_table_from_file("accounting/items.csv"))
+    elif user_input == 2:
+        add(table)
+    elif user_input == 3:
+        # show_table(data_manager.get_table_from_file("accounting/items.csv"))
+        table = data_manager.get_table_from_file("accounting/items.csv")
+        print(table)
+        list_labels = ['ID:']
+        title = "Please provide the ID to be removed"
+        id_ = ui.get_inputs(list_labels, title)
+        remove(table, id_)
+        print(id_) #test
+    elif user_input == 4:
+        update(table, id_)
+    elif user_input == 5:
+        which_year_max(table)
+    elif user_input == 6:
+        avg_amount(table, year)
+    elif user_input == 0:
+        pass
 
 
 
@@ -68,14 +70,11 @@ def show_table(table):
         None
     """
 
-    # file_name = "accounting\items.csv"
-    # #file_name = "transformerps\accounting\items.csv"
-    # table = data_manager.get_table_from_file(file_name)
+    file_name = "accounting\items.csv"
+    table = data_manager.get_table_from_file(file_name)
     title_list = ['id','month','day','year','type','amount']
     ui.print_table(table, title_list)
-
-
-
+    start_module()
 
 def add(table):
     """
@@ -104,9 +103,19 @@ def remove(table, id_):
     Returns:
         list: Table without specified record.
     """
+    file_name = "accounting\items.csv"
 
-    # your code
+    for row in table:
+        if str(row[0]) == str(id_[0]):
+            print(str(row[0]))
+            print(str(id_[0]))
+            print('yes')
+            table.remove(row)
+            print(table)
+        else:
+            pass
 
+    data_manager.write_table_to_file(file_name, table)
     return table
 
 

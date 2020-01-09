@@ -65,8 +65,6 @@ def show_table(table):
     title_list = ['id','name','email','subscribed']
     ui.print_table(table, title_list)
     start_module()
- 
-
 
 def add(table):
     """
@@ -82,6 +80,7 @@ def add(table):
     file_in_list_form = data_manager.get_table_from_file(file_name)
     table_after_change = file_in_list_form + [[",".join(table)]]
     data_manager.write_table_to_file(file_name, table_after_change)
+    start_module()
 
     return table
 
