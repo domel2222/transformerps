@@ -21,16 +21,8 @@ def print_table(table, title_list):
     Returns:
         None: This function doesn't return anything it only prints to console.
     """
-    # print(table)
+
     table.insert(0, title_list)
-    # print(table)
-    # temp_table = []
-    # for item in table:
-    #     rej = ';'.join(item)
-    #     rej_tab = rej.split(';')
-    #     temp_table.append(rej_tab)
-    # print(table)
-    # print(temp_table)
     columns_width = []
 
     # getting column width for a table
@@ -53,12 +45,16 @@ def print_table(table, title_list):
         break_line += num*'-' + '|'
 
     print('/' + "-" * table_width + '\\')
-    for position in table:
+    for position in table[:-1]:
         print("|", end="")
         for position_index, column in enumerate(position):
             print("{0:^{1}}".format(column, columns_width[position_index]), end ="|")
         print('')
         print(break_line)
+    print("|", end="")
+    for position_index, column in enumerate(table[-1]):    
+        print("{0:^{1}}".format(column, columns_width[position_index]), end ="|")
+    print('\n' + '\\' + "-" * table_width + '/')
 
     # print(title_list)
     # for row in table:
