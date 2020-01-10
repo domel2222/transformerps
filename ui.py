@@ -43,16 +43,22 @@ def print_table(table, title_list):
             
         columns_width.append(max)
 
-    table_width = len(columns_width)
+    edges_control = 1
+    table_width = len(columns_width) - edges_control
     for item in columns_width:
         table_width += item
 
-    print('\n',"-"*table_width)
+    break_line = '|'
+    for num in columns_width:
+        break_line += num*'-' + '|'
+
+    print('/' + "-" * table_width + '\\')
     for position in table:
         print("|", end="")
         for position_index, column in enumerate(position):
             print("{0:^{1}}".format(column, columns_width[position_index]), end ="|")
-        print('\n',"-"*table_width)
+        print('')
+        print(break_line)
 
     # print(title_list)
     # for row in table:
