@@ -44,7 +44,7 @@ def start_module():
             add(added_to_table)
         elif user_input == 3:
             file_in_list_form = data_manager.get_table_from_file(file_name)
-            list_labels = ["Id:"]
+            list_labels = ["Id"]
             title = "Please provide Id from entry you want to change"
             id_from_entry_to_be_changed = ui.get_inputs(list_labels, title)
             remove(file_in_list_form, id_from_entry_to_be_changed)
