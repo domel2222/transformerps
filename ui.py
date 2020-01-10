@@ -56,12 +56,6 @@ def print_table(table, title_list):
         print("{0:^{1}}".format(column, columns_width[position_index]), end ="|")
     print('\n' + '\\' + "-" * table_width + '/')
 
-    # print(title_list)
-    # for row in table:
-    #     for column in row:
-    #         print (column + " ", end="")
-    #     print('\n')
-
 
 def print_result(result, label):
     """
