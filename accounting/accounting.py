@@ -39,17 +39,15 @@ def start_module():
     ui.print_menu(title, list_options, exit_message)
     number_of_menu_options = 7
     user_input = ui.get_input_menu(number_of_menu_options-1)
-    
+    table = data_manager.get_table_from_file(FILE_NAME)
+
     if user_input == 1:
-        table = data_manager.get_table_from_file(FILE_NAME)
         show_table(table)
         start_module()
     elif user_input == 2:
-        table = data_manager.get_table_from_file(FILE_NAME)
         add(table)
         start_module()
     elif user_input == 3:
-        table = data_manager.get_table_from_file(FILE_NAME)
         show_table(table)
         list_labels = ['ID:']
         title = "Please provide the ID to be removed"
@@ -80,10 +78,7 @@ def show_table(table):
     global FILE_NAME
     global TITLE_LIST
     
-    # table = data_manager.get_table_from_file(FILE_NAME)
     ui.print_table(table, TITLE_LIST)
-
-
 
 def add(table):
     """
@@ -103,9 +98,6 @@ def add(table):
     table = table + [[";".join(new_record)]]
     data_manager.write_table_to_file(FILE_NAME, table)
 
-
-    # your code
-
     return table
 
 
@@ -120,19 +112,16 @@ def remove(table, id_):
     Returns:
         list: Table without specified record.
     """
-    #in the future, display the table when calling the function remove
-    
     global FILE_NAME
-    # show_table(table)
 
     for row in table:
         if str(row[0]) == str(id_[0]):
-            # print(str(row[0]), str(id_[0]))
             table.remove(row)
-            
+            label = "You have successfully removed index: "
+            result = id_[0]
+            ui.print_result(result, label)           
         else:
             pass
-
     data_manager.write_table_to_file(FILE_NAME, table)
     
     return table
