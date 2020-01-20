@@ -151,7 +151,14 @@ def get_longest_name_id(table):
                 the last by alphabetical order of the names)
         """
 
-    # your code
+    table = data_manager.get_table_from_file("crm/customers.csv")
+    longest_name = table[0][1]
+    result = table[0][0]
+    for line in table:
+        if len(line[1]) >= len(longest_name) and line[1][0] >= longest_name[0]:
+            longest_name = line[1]
+            result = line[0]
+    return result
 
 
 # the question: Which customers has subscribed to the newsletter?
