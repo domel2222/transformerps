@@ -44,12 +44,16 @@ def start_module():
             add(added_to_table)
         elif user_input == 3:
             file_in_list_form = data_manager.get_table_from_file(file_name)
-            list_labels = ["Id"]
+            list_labels = ["Id:"]
+            title = "Please provide Id of entry to be removed"
+            id_to_be_removed = ui.get_inputs(list_labels, title)
+            remove(file_in_list_form, id_to_be_removed)
+        elif user_input == 4:
+            file_in_list_form = data_manager.get_table_from_file(file_name)
+            list_labels = ["Id:"]
             title = "Please provide Id from entry you want to change"
             id_from_entry_to_be_changed = ui.get_inputs(list_labels, title)
-            remove(file_in_list_form, id_from_entry_to_be_changed)
-        elif user_input == 4:
-            update(table, id)
+            update(file_in_list_form, id_from_entry_to_be_changed)
         elif user_input == 5:
             get_available_items(table, id)
         elif user_input == 6:
@@ -118,20 +122,50 @@ def remove(table, id):
 
 
 def update(table, id):
-    """
-    Updates specified record in the table. Ask users for new data.
+    file_name = "inventory/inventory.csv"
+    count = 0
+    for entry in table:
+        entry = str(entry[0])
+        entry_in_list_form = entry.split(";")
+        if entry_in_list_form[0] == id[0]:
+            #chosen_parameter = "" <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<error handling
+            #while chosen_parameter != "Name" or chosen_parameter != "Date":
+            list_labels = ":"
+            title = "which parameter do you want to change? (Name/Manufacturer/Purchase Year/Durability)"
+            chosen_parameter_list = ui.get_inputs(list_labels, title)
+            chosen_parameter = chosen_parameter_list[0]
+            if chosen_parameter == "Name":
+                list_labels = ":"
+                title = "New Name"
+                new_name = ui.get_inputs(list_labels, title)[0]
+                modified_entry = entry_in_list_form[0] + ";" + entry_in_list_form[2] + ";" + new_name
+                new_table = table[:count] + [[modified_entry]] + table[count+1:]        
+                data_manager.write_table_to_file(file_name, new_table)
+            if chosen_parameter == "Manufacturer":
+                list_labels = ":"
+                title = "New Manufacturer"
+                new_manufacturer = ui.get_inputs(list_labels, title)[0]
+                modified_entry = entry_in_list_form[0] + ";" + entry_in_list_form[2] + ";" + new_manufacturer
+                new_table = table[:count] + [[modified_entry]] + table[count+1:]        
+                data_manager.write_table_to_file(file_name, new_table)
+            if chosen_parameter == "Purchase Year":
+                list_labels = ":"
+                title = "New Purchase Year"
+                new_purchase_year = ui.get_inputs(list_labels, title)[0]
+                modified_entry = entry_in_list_form[0] + ";" + entry_in_list_form[2] + ";" + new_purchase_year
+                new_table = table[:count] + [[modified_entry]] + table[count+1:]        
+                data_manager.write_table_to_file(file_name, new_table)
+            if chosen_parameter == "Durability":
+                list_labels = ":"
+                title = "New Durability"
+                new_durability= ui.get_inputs(list_labels, title)[0]
+                modified_entry = entry_in_list_form[0] + ";" + entry_in_list_form[2] + ";" + new_durability
+                new_table = table[:count] + [[modified_entry]] + table[count+1:]        
+                data_manager.write_table_to_file(file_name, new_table)
+        count += 1
+    start_module()
 
-    Args:
-        table (list): list in which record should be updated
-        id_ (str): id of a record to update
-
-    Returns:
-        list: table with updated record
-    """
-
-    # your code
-
-    return table
+    return tables
 
 
 # special functions:
