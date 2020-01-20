@@ -152,7 +152,7 @@ def print_error_message(message):
         None: This function doesn't return anything it only prints to console.
     """
 
-    print(message)
+    print("Unfortunately an error occured. This is the error message: {}".format(message))
 
 
 def get_input_menu(menu_options):
