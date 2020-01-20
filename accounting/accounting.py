@@ -18,6 +18,9 @@ import data_manager
 # common module
 import common
 
+FILE_NAME = "accounting/items.csv"
+TITLE_LIST = ['ID:','Month:','Day:','Year:','Type:','Amount:']
+
 
 def start_module():
     """
@@ -28,6 +31,7 @@ def start_module():
     Returns:
         None
     """
+    global FILE_NAME
 
     title = "Accounting"
     list_options = ['Show table','Add new entry','Remove a record','Update specific record','Show year with the highest profit','Show average profit per item in a given year']
@@ -35,16 +39,23 @@ def start_module():
     ui.print_menu(title, list_options, exit_message)
     number_of_menu_options = 7
     user_input = ui.get_input_menu(number_of_menu_options-1)
+    
     if user_input == 1:
-        show_table(data_manager.get_table_from_file("accounting/items.csv"))
+        table = data_manager.get_table_from_file(FILE_NAME)
+        show_table(table)
+        start_module()
     elif user_input == 2:
+        table = data_manager.get_table_from_file(FILE_NAME)
         add(table)
+        start_module()
     elif user_input == 3:
-        table = data_manager.get_table_from_file("accounting/items.csv")
+        table = data_manager.get_table_from_file(FILE_NAME)
+        show_table(table)
         list_labels = ['ID:']
         title = "Please provide the ID to be removed"
         id_ = ui.get_inputs(list_labels, title)
         remove(table, id_)
+        start_module()
     elif user_input == 4:
         update(table, id_)
     elif user_input == 5:
@@ -66,11 +77,12 @@ def show_table(table):
     Returns:
         None
     """
+    global FILE_NAME
+    global TITLE_LIST
+    
+    # table = data_manager.get_table_from_file(FILE_NAME)
+    ui.print_table(table, TITLE_LIST)
 
-    file_name = "accounting/items.csv"
-    table = data_manager.get_table_from_file(file_name)
-    title_list = ['id','month','day','year','type','amount']
-    ui.print_table(table, title_list)
 
 
 def add(table):
@@ -83,6 +95,14 @@ def add(table):
     Returns:
         list: Table with a new record
     """
+    global FILE_NAME
+    global TITLE_LIST
+
+    title = "Please provide data for new entry:"
+    new_record = ui.get_inputs(TITLE_LIST, title)
+    table = table + [[";".join(new_record)]]
+    data_manager.write_table_to_file(FILE_NAME, table)
+
 
     # your code
 
@@ -102,16 +122,19 @@ def remove(table, id_):
     """
     #in the future, display the table when calling the function remove
     
-    file_name = "accounting/items.csv"
-    show_table(table)
+    global FILE_NAME
+    # show_table(table)
 
     for row in table:
         if str(row[0]) == str(id_[0]):
+            # print(str(row[0]), str(id_[0]))
             table.remove(row)
+            
         else:
             pass
 
-    data_manager.write_table_to_file(file_name, table)
+    data_manager.write_table_to_file(FILE_NAME, table)
+    
     return table
 
 
