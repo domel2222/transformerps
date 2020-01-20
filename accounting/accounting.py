@@ -31,7 +31,6 @@ def start_module():
     Returns:
         None
     """
-    global FILE_NAME
 
     title = "Accounting"
     list_options = ['Show table','Add new entry','Remove a record','Update specific record','Show year with the highest profit','Show average profit per item in a given year']
@@ -75,8 +74,6 @@ def show_table(table):
     Returns:
         None
     """
-    global FILE_NAME
-    global TITLE_LIST
     
     ui.print_table(table, TITLE_LIST)
 
@@ -90,8 +87,6 @@ def add(table):
     Returns:
         list: Table with a new record
     """
-    global FILE_NAME
-    global TITLE_LIST
 
     title = "Please provide data for new entry:"
     new_record = ui.get_inputs(TITLE_LIST, title)
@@ -112,7 +107,6 @@ def remove(table, id_):
     Returns:
         list: Table without specified record.
     """
-    global FILE_NAME
 
     for row in table:
         if str(row[0]) == str(id_[0]):
