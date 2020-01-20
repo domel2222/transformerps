@@ -1,6 +1,19 @@
 """ User Interface (UI) module """
 
 
+def column_width_counter(label_list, table):
+    columns_width = []
+    for column in range(len(label_list)):
+        max = 0
+        for record in range(len(table)):
+            
+            if len(table[record][column]) >= max:
+                max = len(table[record][column])    
+            
+        columns_width.append(max)
+    return columns_width
+
+
 def print_table(table, title_list):
     """
     Prints table with data.
@@ -23,17 +36,9 @@ def print_table(table, title_list):
     """
 
     table.insert(0, title_list)
-    columns_width = []
 
     # getting column width for a table
-    for column in range(len(title_list)):
-        max = 0
-        for record in range(len(table)):
-            
-            if len(table[record][column]) >= max:
-                max = len(table[record][column])    
-            
-        columns_width.append(max)
+    columns_width = column_width_counter(title_list, table)
 
     edges_control = 1
     table_width = len(columns_width) - edges_control
