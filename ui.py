@@ -174,12 +174,3 @@ def get_input_menu(menu_options):
                 return menu_choice
             else:
                 print("Your choice is not on the list.")
-
-
-def get_input(label):
-    ''' prints a prompt for a user and returns
-        user input to the program'''
-
-    user_input = input(label)
-    
-    return user_input
