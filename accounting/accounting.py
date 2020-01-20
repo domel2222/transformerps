@@ -19,7 +19,7 @@ import data_manager
 import common
 
 FILE_NAME = "accounting/items.csv"
-TITLE_LIST = ['ID:','Month:','Day:','Year:','Type:','Amount:']
+TITLE_LIST = ['ID','Month','Day','Year','Type','Amount']
 
 
 def start_module():
@@ -48,7 +48,7 @@ def start_module():
         start_module()
     elif user_input == 3:
         show_table(table)
-        list_labels = ['ID:']
+        list_labels = ['ID']
         title = "Please provide the ID to be removed"
         id_ = ui.get_inputs(list_labels, title)
         remove(table, id_)
