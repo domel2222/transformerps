@@ -20,6 +20,33 @@ def generate_random(table):
 
     generated = ''
 
-    # your code
+        generated = ''
+
+    lower_let = 'qwertyuioplkjhgfdsazxcvbnm'
+    upper_let = 'QWERTYUIOPLKJHGFDSAZXCVBNM'
+    digit = '1234567890'
+    special = '!@#$%^&*'
+    
+
+    for i in range(2):
+        generated += random.choice(lower_let)
+        generated += random.choice(upper_let)
+
+
+    for i in range(2):
+        generated += random.choice(digit)
+
+
+    for i in range(2):
+        generated += random.choice(special)
+
+    
+
+    for i in range(1):
+        for row in table:
+            if (str(row[0])) ==  generated:
+                generate_random(table)
+
+
 
     return generated
