@@ -34,13 +34,13 @@ def start_module():
         'Show table', 'Add new entry', 'Remove a record',
         'Update specific record',
         'Show id of the customer with the longest name',
-        'Show customers who are subscribed to the newsletter'
+        'Show customers who are subscribed to the newsletter',
+        'Show customer name by given id'
     ]
     exit_message = "Go back to main menu"
     ui.print_menu(title, list_options, exit_message)
-    number_of_menu_options = 7
     table = data_manager.get_table_from_file(file_name)
-    user_input = ui.get_input_menu(number_of_menu_options - 1)
+    user_input = ui.get_input_menu(len(list_options))
     if user_input == 1:
         show_table(data_manager.get_table_from_file(file_name))
     elif user_input == 2:
@@ -90,11 +90,11 @@ def add(table):
     Returns:
         list: Table with a new record
     """
-    list_labels = ['Id', 'Name', 'Email', 'Subscribed']
+    title_list = ['Id', 'Name', 'Email', 'Subscribed']
     title = "Please provide data for new entry"
-    new_entry = ui.get_inputs(list_labels, title)
-    table_after_change = table + [[",".join(new_entry)]]
-    data_manager.write_table_to_file(file_name, table_after_change)
+    new_record = ui.get_inputs(title_list, title)
+    table += [[";".join(new_record)]]
+    data_manager.write_table_to_file(file_name, table)
     start_module()
 
     return table
@@ -112,14 +112,24 @@ def remove(table, id):
         list: Table without specified record.
     """
 
-    count = 0
-    for entry in table:
-        entry = str(entry[0])
-        entry_in_list_form = entry.split(";")
-        if entry_in_list_form[0] == id[0]:
-            new_table = table[:count] + table[count + 1:]
-            data_manager.write_table_to_file(file_name, new_table)
-        count += 1
+    # count = 0
+    # for entry in table:
+    #     entry = str(entry[0])
+    #     entry_in_list_form = entry.split(";")
+    #     if entry_in_list_form[0] == id[0]:
+    #         new_table = table[:count] + table[count + 1:]
+    #         data_manager.write_table_to_file(file_name, new_table)
+    #     count += 1
+
+    for row in table:
+        if str(row[0]) == str(id[0]):
+            table.remove(row)
+            label = "You have successfully removed index: "
+            result = id[0]
+            ui.print_result(result, label)           
+        else:
+            pass
+    data_manager.write_table_to_file(file_name, table)
     start_module()
 
     return table
