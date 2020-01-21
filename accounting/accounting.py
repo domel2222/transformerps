@@ -17,9 +17,10 @@ import ui
 import data_manager
 # common module
 import common
+import main
 
-FILE_NAME = "accounting/items.csv"
-TITLE_LIST = ['ID','Month','Day','Year','Type','Amount']
+file_name = "accounting/items.csv"
+title_list = ['ID','Month','Day','Year','Type','Amount']
 
 
 def start_module():
@@ -38,7 +39,7 @@ def start_module():
     ui.print_menu(title, list_options, exit_message)
     number_of_menu_options = 7
     user_input = ui.get_input_menu(number_of_menu_options-1)
-    table = data_manager.get_table_from_file(FILE_NAME)
+    table = data_manager.get_table_from_file(file_name)
 
     if user_input == 1:
         show_table(table)
@@ -50,11 +51,12 @@ def start_module():
         show_table(table)
         list_labels = ['ID']
         title = "Please provide the ID to be removed"
-        id_ = ui.get_inputs(list_labels, title)
+        id= ui.get_inputs(list_labels, title)
         remove(table, id_)
         start_module()
     elif user_input == 4:
-        update(table, id_)
+        id = ui.get_inputs(['month','day','year','type','amount'], "Please insert new information")
+        update(table,id)
     elif user_input == 5:
         which_year_max(table)
     elif user_input == 6:
@@ -75,7 +77,7 @@ def show_table(table):
         None
     """
     
-    ui.print_table(table, TITLE_LIST)
+    ui.print_table(table, title_list)
 
 def add(table):
     """
@@ -89,9 +91,9 @@ def add(table):
     """
 
     title = "Please provide data for new entry:"
-    new_record = ui.get_inputs(TITLE_LIST, title)
+    new_record = ui.get_inputs(title_list, title)
     table = table + [[";".join(new_record)]]
-    data_manager.write_table_to_file(FILE_NAME, table)
+    data_manager.write_table_to_file(file_name, table)
 
     return table
 
@@ -116,7 +118,7 @@ def remove(table, id_):
             ui.print_result(result, label)           
         else:
             pass
-    data_manager.write_table_to_file(FILE_NAME, table)
+    data_manager.write_table_to_file(file_name, table)
     
     return table
 
@@ -132,10 +134,22 @@ def update(table, id_):
     Returns:
         list: table with updated record
     """
+    id= ("".join(map(str, id_)))
+    index_table = 0
+    for row in table:
+        if row[0] == id_:
+            ui.print_result(row, f"This is the record you want to update")
+            datauser = ui.get_inputs(['month','day','year','type','amount'], "Please insert new information")
+            table[index_table][1:] = datauser
+            ui.print_result(table[index_table],f"This is your record after changes")
+        index_table += 1
+
+
+    data_manager.write_table_to_file("accounting/items.csv", table)
+    start_module()
+    return table
 
     # your code
-
-    return table
 
 
 # special functions:
