@@ -61,6 +61,8 @@ def start_module():
                         "The customer with the longest name has id: ")
     elif user_input == 6:
         get_subscribed_emails(table)
+    elif user_input == 7:
+        get_name_by_id(id)
     elif user_input == 0:
         pass
 
@@ -90,13 +92,22 @@ def add(table):
     Returns:
         list: Table with a new record
     """
-    title_list = ['Id', 'Name', 'Email', 'Subscribed']
+    message = ("Please check your input")
+    title_list = ['Name', 'Email', 'Subscribed']
     title = "Please provide data for new entry"
+    id_ = common.generate_random(table)
     new_record = ui.get_inputs(title_list, title)
-    table += [[";".join(new_record)]]
-    data_manager.write_table_to_file(file_name, table)
+    new_record.insert(0, id_)
+    if isinstance(new_record[1],
+                  str) and new_record[3] == '0' or new_record[3] == '1':
+        table += [[";".join(new_record)]]
+        label = "You have just added new client: "
+        ui.print_result(new_record, label)
+        data_manager.write_table_to_file(file_name, table)
+    else:
+        ui.print_error_message(message)
+        add(table)
     start_module()
-
     return table
 
 
@@ -126,7 +137,7 @@ def remove(table, id):
             table.remove(row)
             label = "You have successfully removed index: "
             result = id[0]
-            ui.print_result(result, label)           
+            ui.print_result(result, label)
         else:
             pass
     data_manager.write_table_to_file(file_name, table)
