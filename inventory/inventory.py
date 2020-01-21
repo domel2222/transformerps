@@ -35,6 +35,7 @@ def start_module():
         number_of_menu_options = 6
         user_input = ui.get_input_menu(number_of_menu_options-1) #asks user to select numbered option from the menu
         file_name = "inventory/inventory.csv"
+        table = data_manager.get_table_from_file("inventory/inventory.csv")
         if user_input == 1:
             show_table(data_manager.get_table_from_file("inventory/inventory.csv"))
         elif user_input == 2:
@@ -49,11 +50,8 @@ def start_module():
             id_to_be_removed = ui.get_inputs(list_labels, title)
             remove(file_in_list_form, id_to_be_removed)
         elif user_input == 4:
-            file_in_list_form = data_manager.get_table_from_file(file_name)
-            list_labels = ["Id:"]
-            title = "Please provide Id from entry you want to change"
-            id_from_entry_to_be_changed = ui.get_inputs(list_labels, title)
-            update(file_in_list_form, id_from_entry_to_be_changed)
+            id_ = ui.get_inputs(['Choose ID which do you want update:  '], "Please provide your personal information")
+            update(table,id_)
         elif user_input == 5:
             get_available_items(table, id)
         elif user_input == 6:
@@ -121,48 +119,23 @@ def remove(table, id):
     return table
 
 
-def update(table, id):
-    file_name = "inventory/inventory.csv"
-    count = 0
-    for entry in table:
-        entry = str(entry[0])
-        entry_in_list_form = entry.split(";")
-        if entry_in_list_form[0] == id[0]:
-            #chosen_parameter = "" <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<error handling
-            #while chosen_parameter != "Name" or chosen_parameter != "Date":
-            list_labels = ":"
-            title = "which parameter do you want to change? (Name/Manufacturer/Purchase Year/Durability)"
-            chosen_parameter_list = ui.get_inputs(list_labels, title)
-            chosen_parameter = chosen_parameter_list[0]
-            if chosen_parameter == "Name":
-                list_labels = ":"
-                title = "New Name"
-                new_name = ui.get_inputs(list_labels, title)[0]
-                modified_entry = entry_in_list_form[0] + ";" + entry_in_list_form[2] + ";" + new_name
-                new_table = table[:count] + [[modified_entry]] + table[count+1:]        
-                data_manager.write_table_to_file(file_name, new_table)
-            if chosen_parameter == "Manufacturer":
-                list_labels = ":"
-                title = "New Manufacturer"
-                new_manufacturer = ui.get_inputs(list_labels, title)[0]
-                modified_entry = entry_in_list_form[0] + ";" + entry_in_list_form[2] + ";" + new_manufacturer
-                new_table = table[:count] + [[modified_entry]] + table[count+1:]        
-                data_manager.write_table_to_file(file_name, new_table)
-            if chosen_parameter == "Purchase Year":
-                list_labels = ":"
-                title = "New Purchase Year"
-                new_purchase_year = ui.get_inputs(list_labels, title)[0]
-                modified_entry = entry_in_list_form[0] + ";" + entry_in_list_form[2] + ";" + new_purchase_year
-                new_table = table[:count] + [[modified_entry]] + table[count+1:]        
-                data_manager.write_table_to_file(file_name, new_table)
-            if chosen_parameter == "Durability":
-                list_labels = ":"
-                title = "New Durability"
-                new_durability= ui.get_inputs(list_labels, title)[0]
-                modified_entry = entry_in_list_form[0] + ";" + entry_in_list_form[2] + ";" + new_durability
-                new_table = table[:count] + [[modified_entry]] + table[count+1:]        
-                data_manager.write_table_to_file(file_name, new_table)
-        count += 1
+def update(table, id_):
+    index_table = 0
+    for row in table:
+        print(row)
+        print(table[index_table][0])
+        print(id_)
+        if table[index_table][0] == str(id_[0]):
+            ui.print_result(row, f"This is  employee which you choose ")
+            datauser = ui.get_inputs(["Name: ", "Manufacter: " , "Purchase Year: ", "Durability: "], "Please insert new information")
+            table[index_table][1:] = datauser
+            ui.print_result(table[index_table],f"This is your record after changes")
+        index_table += 1
+
+
+    data_manager.write_table_to_file("inventory/inventory.csv", table)
+    
+    
     start_module()
 
     return tables
