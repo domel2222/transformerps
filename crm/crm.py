@@ -173,7 +173,7 @@ def update(table, id_):
         index_table += 1
 
     data_manager.write_table_to_file("crm/customers.csv", table)
-
+    start_module()
     return table
 
 
@@ -199,6 +199,7 @@ def get_longest_name_id(table):
         if len(line[1]) >= len(longest_name) and line[1][0] >= longest_name[0]:
             longest_name = line[1]
             result = line[0]
+    start_module()
     return result
 
 
