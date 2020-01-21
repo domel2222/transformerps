@@ -34,7 +34,8 @@ def start_module():
         'Show table', 'Add new entry', 'Remove a record',
         'Update specific record',
         'Show id of the customer with the longest name',
-        'Show customers who are subscribed to the newsletter'
+        'Show customers who are subscribed to the newsletter',
+        'Show customer name by given id'
     ]
     exit_message = "Go back to main menu"
     ui.print_menu(title, list_options, exit_message)
@@ -92,7 +93,7 @@ def add(table):
     title_list = ['Id', 'Name', 'Email', 'Subscribed']
     title = "Please provide data for new entry"
     new_record = ui.get_inputs(title_list, title)
-    table += [[",".join(new_record)]]
+    table += [[";".join(new_record)]]
     data_manager.write_table_to_file(file_name, table)
     start_module()
 
