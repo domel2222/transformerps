@@ -93,8 +93,8 @@ def add(table):
     title_list = ['Id', 'Name', 'Email', 'Subscribed']
     title = "Please provide data for new entry"
     new_record = ui.get_inputs(title_list, title)
-    table_after_change = table + [[",".join(new_record)]]
-    data_manager.write_table_to_file(file_name, table_after_change)
+    table += [[",".join(new_record)]]
+    data_manager.write_table_to_file(file_name, table)
     start_module()
 
     return table
