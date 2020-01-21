@@ -135,7 +135,7 @@ def update(table, id_):
     
     start_module()
 
-    return tables
+    return table
 
 
 # special functions:
