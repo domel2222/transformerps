@@ -90,10 +90,10 @@ def add(table):
     Returns:
         list: Table with a new record
     """
-    list_labels = ['Id', 'Name', 'Email', 'Subscribed']
+    title_list = ['Id', 'Name', 'Email', 'Subscribed']
     title = "Please provide data for new entry"
-    new_entry = ui.get_inputs(list_labels, title)
-    table_after_change = table + [[",".join(new_entry)]]
+    new_record = ui.get_inputs(title_list, title)
+    table_after_change = table + [[",".join(new_record)]]
     data_manager.write_table_to_file(file_name, table_after_change)
     start_module()
 
@@ -112,14 +112,24 @@ def remove(table, id):
         list: Table without specified record.
     """
 
-    count = 0
-    for entry in table:
-        entry = str(entry[0])
-        entry_in_list_form = entry.split(";")
-        if entry_in_list_form[0] == id[0]:
-            new_table = table[:count] + table[count + 1:]
-            data_manager.write_table_to_file(file_name, new_table)
-        count += 1
+    # count = 0
+    # for entry in table:
+    #     entry = str(entry[0])
+    #     entry_in_list_form = entry.split(";")
+    #     if entry_in_list_form[0] == id[0]:
+    #         new_table = table[:count] + table[count + 1:]
+    #         data_manager.write_table_to_file(file_name, new_table)
+    #     count += 1
+
+    for row in table:
+        if str(row[0]) == str(id[0]):
+            table.remove(row)
+            label = "You have successfully removed index: "
+            result = id[0]
+            ui.print_result(result, label)           
+        else:
+            pass
+    data_manager.write_table_to_file(file_name, table)
     start_module()
 
     return table
