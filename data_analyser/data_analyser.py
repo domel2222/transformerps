@@ -13,6 +13,7 @@ import ui
 import common
 from sales import sales
 from crm import crm
+import data_manager
 
 
 def start_module():
@@ -24,6 +25,30 @@ def start_module():
     Returns:
         None
     """
+    title = "Data Analyser"
+    list_options = ['Last buyer name','Last buyer id','Buyer with the most money spent','Name of the buyer with most money spent',
+    'Show most frequent buyers names','Show the most frequent buyers ids']
+    exit_message = "Go back to main menu"
+    ui.print_menu(title, list_options, exit_message)
+    number_of_menu_options = 5
+    user_input = ui.get_input_menu(number_of_menu_options-1)
+    table = data_manager.get_table_from_file(file_name)
+    inputs = ui.get_inputs(["Please enter a number: "], "")
+    option = inputs[0]
+    if option == "1":
+        get_the_last_buyer_name()
+    elif option == "2":
+        get_the_last_buyer_id()
+    elif option == "3":
+        get_the_buyer_name_spent_most_and_the_money_spent()
+    elif option == "4":
+        get_the_most_frequent_buyers_names(num=1)
+    elif option == "5":
+        get_the_most_frequent_buyers_ids(num=1)
+    elif option == "0":
+        sys.exit(0)
+    else:
+        raise KeyError("There is no such option.")
 
     # your code
 
