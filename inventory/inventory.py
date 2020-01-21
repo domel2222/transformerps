@@ -122,11 +122,8 @@ def remove(table, id):
 def update(table, id_):
     index_table = 0
     for row in table:
-        print(row)
-        print(table[index_table][0])
-        print(id_)
         if table[index_table][0] == str(id_[0]):
-            ui.print_result(row, f"This is  employee which you choose ")
+            ui.print_result(row, f"This is  which you choose ")
             datauser = ui.get_inputs(["Name: ", "Manufacter: " , "Purchase Year: ", "Durability: "], "Please insert new information")
             table[index_table][1:] = datauser
             ui.print_result(table[index_table],f"This is your record after changes")
