@@ -19,6 +19,7 @@ import data_manager
 # common module
 import common
 
+title_list = ["Id", "Title", "Price", "Month", "Day", "Year", "customer_id"]
 
 def start_module():
     """
@@ -34,13 +35,14 @@ def start_module():
 
     while in_menu:
         ui.print_menu("Sales", ["Show Table", "Add", "Remove", "Update", "Get Lowest Price Item Id", "Get Items Sold Between"], "Back to Main Menu")
-        number_of_menu_options = 6
+        number_of_menu_options = 7
         user_input = ui.get_input_menu(number_of_menu_options-1) #asks user to select numbered option from the menu
         file_name = "sales/sales.csv"
+        table = data_manager.get_table_from_file("sales/sales.csv")
         if user_input == 1:
             show_table(data_manager.get_table_from_file("sales/sales.csv"))
         elif user_input == 2:
-            title_list = ["Id", "Title", "Price", "Month", "Day", "Year"]
+            
             callout = "Please provide data for new entry"
             added_to_table = ui.get_inputs(title_list, callout)
             add(added_to_table)
@@ -51,7 +53,8 @@ def start_module():
             id_from_entry_to_be_changed = ui.get_inputs(list_labels, title)
             remove(file_in_list_form, id_from_entry_to_be_changed)
         elif user_input == 4:
-            update(table, id)
+            id_ = ui.get_inputs(['Choose ID which do you want update:  '], "Please provide your personal information")
+            update(table, id_)
         elif user_input == 5:
             get_lowest_price_item_id(table, id)
         elif user_input == 6:
@@ -72,7 +75,7 @@ def show_table(table):
         None
     """
 
-    title_list = ["Id", "Title", "Price", "Month", "Day", "Year"]
+    title_list = ["Id", "Title", "Price", "Month", "Day", "Year", "customer_id"]
     ui.print_table(table, title_list) #z UI tabelka
 
 
@@ -133,9 +136,18 @@ def update(table, id_):
         list: table with updated record
     """
 
-    # your code
-
+    index_table = 0
+    for row in table:
+        if table[index_table][0] == str(id_[0]):
+            ui.print_result(row, f"This is sales which you choose ")
+            datauser = ui.get_inputs(["Title: ", "Price: ", "Month: ", "Day: ", "Year: ", "crm_id: "], "Please insert new information")
+            table[index_table][1:] = datauser
+            ui.print_result(table[index_table],f"This is your record after changes")
+        index_table += 1
+    data_manager.write_table_to_file("sales/sales.csv", table)
     return table
+
+    
 
 
 # special functions:
