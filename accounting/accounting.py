@@ -48,12 +48,11 @@ def start_module():
         add(table)
         start_module()
     elif user_input == 3:
-        show_table(table)
-        list_labels = ['ID']
-        title = "Please provide the ID to be removed"
-        id= ui.get_inputs(list_labels, title)
-        remove(table, id_)
-        start_module()
+        file_in_list_form = data_manager.get_table_from_file(file_name)
+        list_labels = ["Id:"]
+        title = "Please provide Id of entry to be removed"
+        id_to_be_removed = ui.get_inputs(list_labels, title)
+        remove(file_in_list_form, id_to_be_removed)
     elif user_input == 4:
         id_ = ui.get_inputs(['Choose ID which do you want update:  '], "Please provide your personal information")
         update(table,id_)
@@ -63,6 +62,7 @@ def start_module():
         avg_amount(table, year)
     elif user_input == 0:
         pass
+    main.main()
 
 
 
