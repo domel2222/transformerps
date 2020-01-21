@@ -38,9 +38,8 @@ def start_module():
     ]
     exit_message = "Go back to main menu"
     ui.print_menu(title, list_options, exit_message)
-    number_of_menu_options = 7
     table = data_manager.get_table_from_file(file_name)
-    user_input = ui.get_input_menu(number_of_menu_options - 1)
+    user_input = ui.get_input_menu(len(list_options))
     if user_input == 1:
         show_table(data_manager.get_table_from_file(file_name))
     elif user_input == 2:
