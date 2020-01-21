@@ -16,6 +16,8 @@ import data_manager
 # common module
 import common
 
+file_name = "crm/customers.csv"
+
 
 def start_module():
     """
@@ -28,35 +30,39 @@ def start_module():
     """
 
     title = "CRM"
-    list_options = ['Show table','Add new entry','Remove a record','Update specific record','Show id of the customer with the longest name','Show customers who are subscribed to the newsletter']
+    list_options = [
+        'Show table', 'Add new entry', 'Remove a record',
+        'Update specific record',
+        'Show id of the customer with the longest name',
+        'Show customers who are subscribed to the newsletter'
+    ]
     exit_message = "Go back to main menu"
     ui.print_menu(title, list_options, exit_message)
     number_of_menu_options = 7
-    file_name = "crm/customers.csv"
-    user_input = ui.get_input_menu(number_of_menu_options-1)
+    table = data_manager.get_table_from_file(file_name)
+    user_input = ui.get_input_menu(number_of_menu_options - 1)
     if user_input == 1:
-        show_table(data_manager.get_table_from_file("crm/customers.csv"))
+        show_table(data_manager.get_table_from_file(file_name))
     elif user_input == 2:
         file_in_list_form = data_manager.get_table_from_file(file_name)
         add(file_in_list_form)
     elif user_input == 3:
         file_in_list_form = data_manager.get_table_from_file(file_name)
         list_labels = ["Id"]
-        title = "Please provide Id from entry you want to change"
+        title = "Please provide Id from entry you want to remove"
         id_from_entry_to_be_changed = ui.get_inputs(list_labels, title)
         remove(file_in_list_form, id_from_entry_to_be_changed)
     elif user_input == 4:
+        id_ = ui.get_inputs(["id"], "Ented id of record to be updated")
         update(table, id_)
     elif user_input == 5:
-        table = data_manager.get_table_from_file("crm/customers.csv")
-        ui.print_result(get_longest_name_id(table), "The customer with the longest name has id: ")
+        table = data_manager.get_table_from_file(file_name)
+        ui.print_result(get_longest_name_id(table),
+                        "The customer with the longest name has id: ")
     elif user_input == 6:
         get_subscribed_emails(table)
     elif user_input == 0:
-        pass   
-
-
-
+        pass
 
 
 def show_table(table):
@@ -69,9 +75,10 @@ def show_table(table):
     Returns:
         None
     """
-    title_list = ['id','name','email','subscribed']
+    title_list = ['id', 'name', 'email', 'subscribed']
     ui.print_table(table, title_list)
     start_module()
+
 
 def add(table):
     """
@@ -83,8 +90,7 @@ def add(table):
     Returns:
         list: Table with a new record
     """
-    file_name = "crm/customers.csv"
-    list_labels = ['Id:','Name:','Email:','Subscribed:']
+    list_labels = ['Id', 'Name', 'Email', 'Subscribed']
     title = "Please provide data for new entry"
     new_entry = ui.get_inputs(list_labels, title)
     table_after_change = table + [[",".join(new_entry)]]
@@ -106,13 +112,12 @@ def remove(table, id):
         list: Table without specified record.
     """
 
-    file_name = "crm/customers.csv"
     count = 0
     for entry in table:
         entry = str(entry[0])
         entry_in_list_form = entry.split(";")
         if entry_in_list_form[0] == id[0]:
-            new_table = table[:count] + table[count+1:]
+            new_table = table[:count] + table[count + 1:]
             data_manager.write_table_to_file(file_name, new_table)
         count += 1
     start_module()
@@ -132,13 +137,28 @@ def update(table, id_):
         list: table with updated record
     """
 
-    # your code
+    id_ = ("".join(map(str, id_)))
+    index_table = 0
+    for row in table:
+        if row[0] == id_:
+            ui.print_result(row, f"This is client you want to update: ")
+            datauser = ui.get_inputs([
+                'Please input new name', 'Please input new email ',
+                'Is client is subscribed to newsletter or not 1/0 = yes/no '
+            ], "Please insert new information")
+            table[index_table][1:] = datauser
+            ui.print_result(table[index_table],
+                            f"This is your record after changes")
+        index_table += 1
+
+    data_manager.write_table_to_file("crm/customers.csv", table)
 
     return table
 
 
 # special functions:
 # ------------------
+
 
 def get_longest_name_id(table):
     """
@@ -194,7 +214,6 @@ def get_name_by_id(id):
     """
 
     # your code
-
 
 
 def get_name_by_id_from_table(table, id):
