@@ -138,9 +138,6 @@ def update(table, id_):
     """
     index_table = 0
     for row in table:
-        print(row)
-        print(table[index_table][0])
-        print(id_)
         if table[index_table][0] == str(id_[0]):
             ui.print_result(row, f"This is the record you want to update")
             datauser = ui.get_inputs(['month','day','year','type','amount'], "Please insert new information")
