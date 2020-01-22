@@ -27,12 +27,12 @@ def start_module():
     """
     table = data_manager.get_table_from_file("hr/persons.csv")
     title = "Human Resources Manager"
-    list_options = ["Show Table", "Add new item", "Remove item", "Update item"]
+    list_options = ["Show Table", "Add new item", "Remove item", "Update item", "Oldest person"]
     exit_message = "Back to main menu"
     ui.print_menu(title, list_options, exit_message)
-    number_of_menu_options = 7
+    # number_of_menu_options = 7
     file_name = "hr/persons.csv"
-    user_input = ui.get_input_menu(number_of_menu_options-1) # the function asks for number of menu options - 1
+    user_input = ui.get_input_menu(len(list_options)) # the function asks for number of menu options - 1
     if user_input == 1:
         show_table(table)
     elif user_input == 2:
@@ -45,6 +45,10 @@ def start_module():
         id_ = ui.get_inputs(['Choose ID which do want update: '], "Please provide your personal information")
         update(table, id_)
         
+    elif user_input == 5:
+        table = data_manager.get_table_from_file(file_name)
+        (get_oldest_person(table))
+
     elif user_input == 0:
         main.main()
 
@@ -79,6 +83,7 @@ def add(table):
     title = "Please provide data for new entry"
     new_entry = ui.get_inputs(list_labels, title)
     table.append([id_, new_entry[0], new_entry[1]])
+    ui.print_result(table[len(table)-1], f'You add n record')
     data_manager.write_table_to_file("hr/persons.csv", table)
     start_module()
     return table
@@ -148,8 +153,22 @@ def get_oldest_person(table):
     Returns:
         list: A list of strings (name or names if there are two more with the same value)
     """
+    
+    oldest_person = []
 
-    # your code
+    for record in table:
+        if not oldest_person:
+            oldest_person.append(record)
+        elif record[2] == oldest_person[0][2]:    # 2 describe year of birth form HR table
+            oldest_person.append(record)
+        elif record[2] < oldest_person[0][2]:
+            oldest_person.clear()
+            oldest_person.append(record)
+    
+    name_list = [name[1] for name in oldest_person] # 1 describe name person of the list
+    ui.print_result(name_list,f"Olders person of the company")
+    start_module()
+        
 
 
 def get_persons_closest_to_average(table):
