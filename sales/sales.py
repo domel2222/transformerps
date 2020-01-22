@@ -18,8 +18,11 @@ import ui
 import data_manager
 # common module
 import common
+# main module
+import main
 
 title_list = ["Id", "Title", "Price", "Month", "Day", "Year", "customer_id"]
+
 
 def start_module():
     """
@@ -31,16 +34,20 @@ def start_module():
         None
     """
 
-    in_menu =  True
+    in_menu = True
 
     while in_menu:
-        ui.print_menu("Sales", ["Show Table", "Add", "Remove", "Update", "Get Lowest Price Item Id", "Get Items Sold Between"], "Back to Main Menu")
-        number_of_menu_options = 7
-        user_input = ui.get_input_menu(number_of_menu_options-1) #asks user to select numbered option from the menu
+        ui.print_menu("Sales", [
+            "Show Table", "Add", "Remove", "Update",
+            "Get Lowest Price Item Id", "Get Items Sold Between",
+            "Show all customers"
+        ], "Back to Main Menu")
+        user_input = ui.get_input_menu(len(
+            title_list))  #asks user to select numbered option from the menu
         file_name = "sales/sales.csv"
-        table = data_manager.get_table_from_file("sales/sales.csv")
+        table = data_manager.get_table_from_file(file_name)
         if user_input == 1:
-            show_table(data_manager.get_table_from_file("sales/sales.csv"))
+            show_table(data_manager.get_table_from_file(file_name))
         elif user_input == 2:
             add(table)
         elif user_input == 3:
@@ -50,15 +57,17 @@ def start_module():
             id_from_entry_to_be_changed = ui.get_inputs(list_labels, title)
             remove(file_in_list_form, id_from_entry_to_be_changed)
         elif user_input == 4:
-            id_ = ui.get_inputs(['Choose ID which do you want update:  '], "Please provide your personal information")
+            id_ = ui.get_inputs(['Choose ID which do you want update:  '],
+                                "Please provide your personal information")
             update(table, id_)
         elif user_input == 5:
-            get_lowest_price_item_id(table, id)
+            get_lowest_price_item_id(table)
         elif user_input == 6:
-            get_items_sold_between(table, id)
+            ui.print_result(get_all_customer_ids(), "See all customers below")
+        # elif user_input == 7:
+        #     get_items_sold_between(table)
         elif user_input == 0:
-            in_menu = False #jest w menu i prosi o input, jeśli nie dostanie 0 pętla się powtarza a jak się przerwie, user wychodzi itd. 
-    # main.main() #exit to the main menu
+            main.main()
 
 
 def show_table(table):
@@ -72,8 +81,10 @@ def show_table(table):
         None
     """
 
-    title_list = ["Id", "Title", "Price", "Month", "Day", "Year", "customer_id"]
-    ui.print_table(table, title_list) #z UI tabelka
+    title_list = [
+        "Id", "Title", "Price", "Month", "Day", "Year", "customer_id"
+    ]
+    ui.print_table(table, title_list)  #z UI tabelka
 
 
 def add(table):
@@ -87,12 +98,17 @@ def add(table):
         list: Table with a new record
     """
 
-    id_  = common.generate_random(table)
+    id_ = common.generate_random(table)
 
-    list_labels = ["Title: ", "Price: ", "Month: ", "Day: ", "Year: ", "customer_id: "]
+    list_labels = [
+        "Title: ", "Price: ", "Month: ", "Day: ", "Year: ", "customer_id: "
+    ]
     title = "Please provide data for new entry"
     new_entry = ui.get_inputs(list_labels, title)
-    table.append([id_, new_entry[0], new_entry[1],new_entry[2],new_entry[3],new_entry[4],new_entry[5]])
+    table.append([
+        id_, new_entry[0], new_entry[1], new_entry[2], new_entry[3],
+        new_entry[4], new_entry[5]
+    ])
     data_manager.write_table_to_file("sales/sales.csv", table)
     start_module()
     return table
@@ -116,7 +132,7 @@ def remove(table, id):
         entry = str(entry[0])
         entry_in_list_form = entry.split(",")
         if entry_in_list_form[0] == id[0]:
-            new_table = table[:count] + table[count+1:]
+            new_table = table[:count] + table[count + 1:]
             data_manager.write_table_to_file(file_name, new_table)
         count += 1
     start_module()
@@ -140,18 +156,20 @@ def update(table, id_):
     for row in table:
         if table[index_table][0] == str(id_[0]):
             ui.print_result(row, f"This is sales which you choose ")
-            datauser = ui.get_inputs(["Title: ", "Price: ", "Month: ", "Day: ", "Year: ", "crm_id: "], "Please insert new information")
+            datauser = ui.get_inputs([
+                "Title: ", "Price: ", "Month: ", "Day: ", "Year: ", "crm_id: "
+            ], "Please insert new information")
             table[index_table][1:] = datauser
-            ui.print_result(table[index_table],f"This is your record after changes")
+            ui.print_result(table[index_table],
+                            f"This is your record after changes")
         index_table += 1
     data_manager.write_table_to_file("sales/sales.csv", table)
     return table
 
-    
-
 
 # special functions:
 # ------------------
+
 
 def get_lowest_price_item_id(table):
     """
@@ -168,7 +186,8 @@ def get_lowest_price_item_id(table):
     # your code
 
 
-def get_items_sold_between(table, month_from, day_from, year_from, month_to, day_to, year_to):
+def get_items_sold_between(table, month_from, day_from, year_from, month_to,
+                           day_to, year_to):
     """
     Question: Which items are sold between two given dates? (from_date < sale_date < to_date)
 
@@ -193,7 +212,6 @@ def get_items_sold_between(table, month_from, day_from, year_from, month_to, day
 
 
 def get_title_by_id(id):
-
     """
     Reads the table with the help of the data_manager module.
     Returns the title (str) of the item with the given id (str) on None om case of non-existing id.
@@ -209,7 +227,6 @@ def get_title_by_id(id):
 
 
 def get_title_by_id_from_table(table, id):
-
     """
     Returns the title (str) of the item with the given id (str) on None om case of non-existing id.
 
