@@ -22,6 +22,7 @@ import common
 import main
 
 title_list = ["Id", "Title", "Price", "Month", "Day", "Year", "customer_id"]
+file_name = "sales/sales.csv"
 
 
 def start_module():
@@ -39,12 +40,10 @@ def start_module():
     while in_menu:
         ui.print_menu("Sales", [
             "Show Table", "Add", "Remove", "Update",
-            "Get Lowest Price Item Id", "Get Items Sold Between",
-            "Show all customers"
+            "Get Lowest Price Item Id", "Show all customers"
         ], "Back to Main Menu")
         user_input = ui.get_input_menu(len(
             title_list))  #asks user to select numbered option from the menu
-        file_name = "sales/sales.csv"
         table = data_manager.get_table_from_file(file_name)
         if user_input == 1:
             show_table(data_manager.get_table_from_file(file_name))
@@ -64,6 +63,7 @@ def start_module():
             get_lowest_price_item_id(table)
         elif user_input == 6:
             ui.print_result(get_all_customer_ids(), "See all customers below")
+            ui.print_result(" ", " ")
         # elif user_input == 7:
         #     get_items_sold_between(table)
         elif user_input == 0:
@@ -126,7 +126,6 @@ def remove(table, id):
         list: Table without specified record.
     """
 
-    file_name = "sales/sales.csv"
     count = 0
     for entry in table:
         entry = str(entry[0])
@@ -163,7 +162,7 @@ def update(table, id_):
             ui.print_result(table[index_table],
                             f"This is your record after changes")
         index_table += 1
-    data_manager.write_table_to_file("sales/sales.csv", table)
+    data_manager.write_table_to_file(file_name, table)
     return table
 
 
@@ -349,7 +348,12 @@ def get_all_customer_ids():
          set of str: set of customer_ids that are present in the table
     """
 
-    # your code
+    sales_tab = data_manager.get_table_from_file(file_name)
+    customers_ids = {}
+    for line in sales_tab:
+        customers_ids[line[6]] = 0
+    result = list(customers_ids.keys())
+    return result
 
 
 def get_all_customer_ids_from_table(table):
