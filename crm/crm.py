@@ -59,6 +59,7 @@ def start_module():
         table = data_manager.get_table_from_file(file_name)
         ui.print_result(get_longest_name_id(table),
                         "The customer with the longest name has id: ")
+        start_module()
     elif user_input == 6:
         get_subscribed_emails(table)
     elif user_input == 7:
@@ -199,7 +200,6 @@ def get_longest_name_id(table):
         if len(line[1]) >= len(longest_name) and line[1][0] >= longest_name[0]:
             longest_name = line[1]
             result = line[0]
-    start_module()
     return result
 
 
