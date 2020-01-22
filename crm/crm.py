@@ -59,6 +59,7 @@ def start_module():
         table = data_manager.get_table_from_file(file_name)
         ui.print_result(get_longest_name_id(table),
                         "The customer with the longest name has id: ")
+        start_module()
     elif user_input == 6:
         get_subscribed_emails(table)
     elif user_input == 7:
@@ -173,7 +174,7 @@ def update(table, id_):
         index_table += 1
 
     data_manager.write_table_to_file("crm/customers.csv", table)
-
+    start_module()
     return table
 
 

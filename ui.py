@@ -83,6 +83,8 @@ def print_result(result, label):
     elif type(result) == dict:
         for key, value in result.items():
             print(str(key) + ": " + str(value))
+    elif type(result) == tuple:
+        print(result)
     else:
         print("I can't process this type of data")
 
@@ -135,7 +137,7 @@ def get_inputs(list_labels, title):
     inputs = []
     print (title)
     for item in list_labels:
-        user_input = input(f'{item}: ')
+        user_input = input(f'{item} ')
         inputs.append(user_input)
 
     return inputs

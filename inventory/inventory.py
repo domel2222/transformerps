@@ -19,6 +19,9 @@ import common
 
 import main
 
+file_name = "inventory/inventory.csv"
+
+
 def start_module():
     """
     Starts this module and displays its menu.
@@ -28,21 +31,23 @@ def start_module():
     Returns:
         None
     """
-    in_menu =  True
+    in_menu = True
 
     while in_menu:
-        ui.print_menu("Inventory", ["Show Table", "Add", "Remove", "Update", "Get Available Items", "Get Average Durability By Manufacturers"], "Back to Main Menu")
+        ui.print_menu("Inventory", [
+            "Show Table", "Add", "Remove", "Update", "Get Available Items",
+            "Get Average Durability By Manufacturers"
+        ], "Back to Main Menu")
         number_of_menu_options = 6
-        user_input = ui.get_input_menu(number_of_menu_options-1) #asks user to select numbered option from the menu
-        file_name = "inventory/inventory.csv"
-        table = data_manager.get_table_from_file("inventory/inventory.csv")
+        user_input = ui.get_input_menu(
+            number_of_menu_options -
+            1)  #asks user to select numbered option from the menu
+        table = data_manager.get_table_from_file(file_name)
         if user_input == 1:
-            show_table(data_manager.get_table_from_file("inventory/inventory.csv"))
+            show_table(data_manager.get_table_from_file(file_name))
         elif user_input == 2:
-            title_list = ["Id: ", "Name: ", "Manufacturer: ", "Purchase Year: ", "Durability: "]
-            callout = "Please provide data for new entry"
-            added_to_table = ui.get_inputs(title_list, callout)
-            add(added_to_table)
+            file_in_list_form = data_manager.get_table_from_file(file_name)
+            add(file_in_list_form)
         elif user_input == 3:
             file_in_list_form = data_manager.get_table_from_file(file_name)
             list_labels = ["Id:"]
@@ -50,17 +55,17 @@ def start_module():
             id_to_be_removed = ui.get_inputs(list_labels, title)
             remove(file_in_list_form, id_to_be_removed)
         elif user_input == 4:
-            id_ = ui.get_inputs(['Choose ID which do you want update:  '], "Please provide your personal information")
-            update(table,id_)
+            id_ = ui.get_inputs(['Choose ID which do you want update:  '],
+                                "Please provide your personal information")
+            update(table, id_)
         elif user_input == 5:
             get_available_items(table, id)
         elif user_input == 6:
-            get_average_durability_by_manufacturers(table, id)
+            get_average_durability_by_manufacturers(table)
         elif user_input == 0:
-            in_menu = False #jest w menu i prosi o input, jeśli nie dostanie 0 pętla się powtarza a jak się przerwie, user wychodzi itd. 
-    
-    main.main() #exit to the main menu
+            in_menu = False  #jest w menu i prosi o input, jeśli nie dostanie 0 pętla się powtarza a jak się przerwie, user wychodzi itd.
 
+    main.main()  #exit to the main menu
 
 
 def show_table(table):
@@ -73,7 +78,10 @@ def show_table(table):
     Returns:
         None
     """
-    ui.print_table(table, ["Id", "Name", "Manufacturer", "Purchase Year", "Durability"]) #z UI tabelka
+    ui.print_table(
+        table, ["Id", "Name", "Manufacturer", "Purchase Year", "Durability"
+                ])  #z UI tabelka
+
 
 def add(table):
     """
@@ -85,10 +93,25 @@ def add(table):
     Returns:
         list: Table with a new record
     """
-    file_name = "inventory/inventory.csv"
-    file_in_list_form = data_manager.get_table_from_file(file_name)
-    added_to_table = file_in_list_form + [[";".join(table)]] #nowy wpis
-    data_manager.write_table_to_file(file_name, added_to_table)
+    CURRENT_YEAR = 2020
+    message = ("Please check your input")
+    title_list = [
+        "Name: ", "Manufacturer: ", "Purchase Year: ", "Durability: "
+    ]
+    title = "Please provide data for new entry"
+    id_ = common.generate_random(table)
+    new_record = ui.get_inputs(title_list, title)
+    new_record.insert(0, id_)
+    if isinstance(new_record[1],
+                  str) and int(new_record[3]) < CURRENT_YEAR + 1:
+        table += [[";".join(new_record)]]
+        label = "You have just added new client: "
+        ui.print_result(new_record, label)
+        data_manager.write_table_to_file(file_name, table)
+    else:
+        ui.print_error_message(message)
+        add(table)
+    start_module()
 
     return table
 
@@ -105,13 +128,12 @@ def remove(table, id):
         list: Table without specified record.
     """
 
-    file_name = "inventory/inventory.csv"
     count = 0
     for entry in table:
         entry = str(entry[0])
         entry_in_list_form = entry.split(",")
         if entry_in_list_form[0] == id[0]:
-            new_table = table[:count] + table[count+1:]
+            new_table = table[:count] + table[count + 1:]
             data_manager.write_table_to_file(file_name, new_table)
         count += 1
     start_module()
@@ -124,15 +146,16 @@ def update(table, id_):
     for row in table:
         if table[index_table][0] == str(id_[0]):
             ui.print_result(row, f"This is  which you choose ")
-            datauser = ui.get_inputs(["Name: ", "Manufacter: " , "Purchase Year: ", "Durability: "], "Please insert new information")
+            datauser = ui.get_inputs(
+                ["Name: ", "Manufacter: ", "Purchase Year: ", "Durability: "],
+                "Please insert new information")
             table[index_table][1:] = datauser
-            ui.print_result(table[index_table],f"This is your record after changes")
+            ui.print_result(table[index_table],
+                            f"This is your record after changes")
         index_table += 1
 
+    data_manager.write_table_to_file(file_name, table)
 
-    data_manager.write_table_to_file("inventory/inventory.csv", table)
-    
-    
     start_module()
 
     return table
@@ -140,6 +163,7 @@ def update(table, id_):
 
 # special functions:
 # ------------------
+
 
 def get_available_items(table, year):
     """
