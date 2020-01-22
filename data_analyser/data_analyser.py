@@ -36,9 +36,6 @@ def start_module():
     exit_message = "Go back to main menu"
     ui.print_menu(title, list_options, exit_message)
     option = ui.get_input_menu(len(list_options))
-    # table = data_manager.get_table_from_file(file_name)
-    # inputs = ui.get_inputs(["Please enter a number"], "")
-    # option = inputs[0]
     if option == 1:
         get_the_last_buyer_name()
     elif option == 2:
@@ -94,20 +91,13 @@ def get_the_buyer_name_spent_most_and_the_money_spent():
     Returns:
         tuple: Tuple of customer name and the sum the customer spent eg.: ('Daniele Coach', 42)
     """
-    table_sales = data_manager.get_table_from_file("sales/sales.csv")
     table_crm = data_manager.get_table_from_file("crm/customers.csv")
-    cust_sales_dict = {}
-    for line in table_sales:
-        cust_sales_dict[line[6]] = 0
-    for line in table_sales:
-        if line[6] in cust_sales_dict.keys():
-            cust_sales_dict[line[6]] += int(line[2])
-    max_key = max(cust_sales_dict, key=cust_sales_dict.get)
+    max_key = get_the_buyer_id_spent_most_and_the_money_spent()[0]
     for index, line in enumerate(table_crm):
         if max_key in line[0]:
             max_index = index
-
-    return (table_crm[max_index][1], cust_sales_dict[max_key])
+    max_money = get_the_buyer_id_spent_most_and_the_money_spent()[1]
+    return (table_crm[max_index][1], max_money)
 
 
 def get_the_buyer_id_spent_most_and_the_money_spent():
