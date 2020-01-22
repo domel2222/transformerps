@@ -165,8 +165,24 @@ def which_year_max(table):
     Returns:
         number
     """
+    
+    years_profit = {}
+    for row in table:
+        if row[4] == "in":
+            if row[3] in years_profit.keys():
+                years_profit[row[3]] += int(row[5])
+            else:
+                years_profit[row[3]] = int(row[5])
+        else:
+            if row[3] in years_profit.keys():
+                years_profit[row[3]] -= int(row[5])
+    year_of_highest_profit = max(years_profit, key=years_profit.get)
+    ui.print_result(year_of_highest_profit, "The highest profit was in the year: ")
+    return year_of_highest_profit
+    
 
-    # your code
+
+
 
 
 def avg_amount(table, year):
