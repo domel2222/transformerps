@@ -42,10 +42,7 @@ def start_module():
         if user_input == 1:
             show_table(data_manager.get_table_from_file("sales/sales.csv"))
         elif user_input == 2:
-            
-            callout = "Please provide data for new entry"
-            added_to_table = ui.get_inputs(title_list, callout)
-            add(added_to_table)
+            add(table)
         elif user_input == 3:
             file_in_list_form = data_manager.get_table_from_file(file_name)
             list_labels = ["Id"]
@@ -90,11 +87,14 @@ def add(table):
         list: Table with a new record
     """
 
-    file_name = "sales/sales.csv"
-    file_in_list_form = data_manager.get_table_from_file(file_name)
-    added_to_table = file_in_list_form + [[";".join(table)]] #nowy wpis
-    data_manager.write_table_to_file(file_name, added_to_table)
+    id_  = common.generate_random(table)
 
+    list_labels = ["Title: ", "Price: ", "Month: ", "Day: ", "Year: ", "customer_id: "]
+    title = "Please provide data for new entry"
+    new_entry = ui.get_inputs(list_labels, title)
+    table.append([id_, new_entry[0], new_entry[1],new_entry[2],new_entry[3],new_entry[4],new_entry[5]])
+    data_manager.write_table_to_file("sales/sales.csv", table)
+    start_module()
     return table
 
 
