@@ -129,8 +129,8 @@ def update(table, id_):
             table[index_table][1:] = datauser
             ui.print_result(table[index_table],f"This is your record after changes")
         index_table += 1
-    start_module()
     data_manager.write_table_to_file("hr/persons.csv", table)
+    start_module()
     
     return table 
 
