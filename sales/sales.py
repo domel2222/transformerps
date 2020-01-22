@@ -109,7 +109,7 @@ def add(table):
         id_, new_entry[0], new_entry[1], new_entry[2], new_entry[3],
         new_entry[4], new_entry[5]
     ])
-    data_manager.write_table_to_file("sales/sales.csv", table)
+    data_manager.write_table_to_file(file_name, table)
     start_module()
     return table
 
