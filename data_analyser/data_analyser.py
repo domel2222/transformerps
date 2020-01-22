@@ -93,9 +93,11 @@ def get_the_buyer_name_spent_most_and_the_money_spent():
     """
     table_crm = data_manager.get_table_from_file("crm/customers.csv")
     max_key = get_the_buyer_id_spent_most_and_the_money_spent()[0]
+
     for index, line in enumerate(table_crm):
         if max_key in line[0]:
             max_index = index
+
     max_money = get_the_buyer_id_spent_most_and_the_money_spent()[1]
     return (table_crm[max_index][1], max_money)
 
@@ -109,11 +111,14 @@ def get_the_buyer_id_spent_most_and_the_money_spent():
     """
     table_sales = data_manager.get_table_from_file("sales/sales.csv")
     cust_sales_dict = {}
+
     for line in table_sales:
         cust_sales_dict[line[6]] = 0
+    
     for line in table_sales:
         if line[6] in cust_sales_dict.keys():
             cust_sales_dict[line[6]] += int(line[2])
+    
     max_key = max(cust_sales_dict, key=cust_sales_dict.get)
     result = tuple((max_key, cust_sales_dict[max_key]))
     return result
