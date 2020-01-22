@@ -38,7 +38,7 @@ def start_module():
             "Show Table", "Add", "Remove", "Update", "Get Available Items",
             "Get Average Durability By Manufacturers"
         ], "Back to Main Menu")
-        number_of_menu_options = 6
+        number_of_menu_options = 7
         user_input = ui.get_input_menu(
             number_of_menu_options -
             1)  #asks user to select numbered option from the menu
@@ -59,9 +59,11 @@ def start_module():
                                 "Please provide your personal information")
             update(table, id_)
         elif user_input == 5:
-            get_available_items(table, id)
+            year = ui.get_inputs(["Year: :"], "Enter a year")
+            get_available_items(table, year)
         elif user_input == 6:
             get_average_durability_by_manufacturers(table)
+            
         elif user_input == 0:
             in_menu = False  #jest w menu i prosi o input, jeśli nie dostanie 0 pętla się powtarza a jak się przerwie, user wychodzi itd.
 
@@ -176,8 +178,16 @@ def get_available_items(table, year):
     Returns:
         list: list of lists (the inner list contains the whole row with their actual data types)
     """
+    temp_table = []
+    current_year = 2020
+    row_counter = 0
+    for row in table:
+        if int(table[row_counter][3]) + int(table[row_counter][4]) >= current_year:
+            temp_table.append(row)
+        row_counter += 1
+    ui.print_table(temp_table, ["Id", "Name", "Manufacturer", "Purchase Year", "Durability"])
+    
 
-    # your code
 
 
 def get_average_durability_by_manufacturers(table):
@@ -191,4 +201,21 @@ def get_average_durability_by_manufacturers(table):
         dict: a dictionary with this structure: { [manufacturer] : [avg] }
     """
 
-    # your code
+    manufacturers_time_on_list = {}
+    manufacturers_sum_of_durability = {}
+    manufacturers_avg_of_durability = {}
+    row_counter = 0
+    for row in table:
+        if row[2] in manufacturers_time_on_list.keys():
+            manufacturers_time_on_list[row[2]] += 1
+            manufacturers_sum_of_durability[row[2]] += int(row[4])
+        else:
+            manufacturers_time_on_list[row[2]] = 1
+            manufacturers_sum_of_durability[row[2]] = int(row[4])
+        row_counter += 1
+    manufacturers_avg_of_durability = {key:float(manufacturers_sum_of_durability[key])/float(manufacturers_time_on_list[key]) for key in manufacturers_time_on_list}
+    ui.print_result(manufacturers_avg_of_durability, "the average durability times for each manufacturer")
+
+    
+          
+    return manufacturers_avg_of_durability
