@@ -79,7 +79,8 @@ def print_result(result, label):
         print(result)
     elif type(result) == list:
         for item in result:
-            print(item + " | ", end="")
+            print(item + " | ", end=" ")
+        print("")
     elif type(result) == dict:
         for key, value in result.items():
             print(str(key) + ": " + str(value))
