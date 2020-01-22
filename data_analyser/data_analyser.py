@@ -37,7 +37,7 @@ def start_module():
     ui.print_menu(title, list_options, exit_message)
     option = ui.get_input_menu(len(list_options))
     if option == 1:
-        get_the_last_buyer_name()
+        get_the_last_buyer_name(table)
     elif option == 2:
         get_the_last_buyer_id()
     elif option == 3:
@@ -59,17 +59,18 @@ def start_module():
 
     # your code
 
-    pass
 
-
-def get_the_last_buyer_name():
+def get_the_last_buyer_name(table):
     """
     Returns the customer _name_ of the customer made sale last.
 
     Returns:
         str: Customer name of the last buyer
     """
-
+    table = data_manager.get_table_from_file('crm/customers.csv')
+    for row in table:
+        return row[-1]
+    ui.print_result(table,row, f"This is the last buyer")
     # your code
 
 
