@@ -42,7 +42,7 @@ def start_module():
         remove(table, id_)
         
     elif user_input == 4:
-        id_ = ui.get_input(['Choose ID which do want update: '], "Please provide your personal information")
+        id_ = ui.get_inputs(['Choose ID which do want update: '], "Please provide your personal information")
         update(table, id_)
         
     elif user_input == 0:
@@ -80,7 +80,7 @@ def add(table):
     new_entry = ui.get_inputs(list_labels, title)
     table.append([id_, new_entry[0], new_entry[1]])
     data_manager.write_table_to_file("hr/persons.csv", table)
-    
+    start_module()
     return table
 
 
@@ -105,7 +105,7 @@ def remove(table, id_):
             ui.print_result(row, f"You removed this record")
         
     data_manager.write_table_to_file(file_name, table)
-
+    start_module()
     return table
 
 
@@ -129,7 +129,7 @@ def update(table, id_):
             table[index_table][1:] = datauser
             ui.print_result(table[index_table],f"This is your record after changes")
         index_table += 1
-    
+    start_module()
     data_manager.write_table_to_file("hr/persons.csv", table)
     
     return table 
