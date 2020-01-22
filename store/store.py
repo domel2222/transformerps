@@ -29,7 +29,7 @@ def start_module():
     """
 
     in_menu =  True
-
+    table = data_manager.get_table_from_file("store/games.csv")
     while in_menu:
         ui.print_menu("Store", ["Show Table", "Add", "Remove", "Update", "Get Counts By Manufacturers", "Get Average By Manufacturer"], "Back to Main Menu")
         number_of_menu_options = 6
@@ -38,10 +38,8 @@ def start_module():
         if user_input == 1:
             show_table(data_manager.get_table_from_file("store/games.csv"))
         elif user_input == 2:
-            title_list = ["Id", "Title", "Manufacturer", "Price", "In Stock"]
-            callout = "Please provide data for new entry"
-            added_to_table = ui.get_inputs(title_list, callout)
-            add(added_to_table)
+            table = data_manager.get_table_from_file("store/games.csv")
+            add(table)
         elif user_input == 3:
             file_in_list_form = data_manager.get_table_from_file(file_name)
             title = "Please provide Id of entry to be removed"
@@ -49,7 +47,8 @@ def start_module():
             id_to_be_removed = ui.get_inputs(list_labels, title)
             remove(file_in_list_form, id_to_be_removed)
         elif user_input == 4:
-            update(table, id)
+            id_ = ui.get_inputs(['Choose ID which do want update: '], "Please provide your personal information")
+            update(table, id_)
         elif user_input == 5:
             get_counts_by_manufacturers(table, id)
         elif user_input == 6:
@@ -83,13 +82,20 @@ def add(table):
     Returns:
         list: Table with a new record
     """
+    id_  = common.generate_random(table)
 
-    file_name = "store/games.csv"
-    file_in_list_form = data_manager.get_table_from_file(file_name)
-    added_to_table = file_in_list_form + [[";".join(table)]] #nowy wpis
-    data_manager.write_table_to_file(file_name, added_to_table)
-
+    list_labels = ["Title", "Manufacturer", "Price", "In Stock"]
+    title = "Please provide data for new entry"
+    new_entry = ui.get_inputs(list_labels, title)
+    new_record = ([id_, new_entry[0], new_entry[1], new_entry[2], new_entry[3]])
+    table.append(new_record)
+    label = "This is your record after changes"
+    ui.print_result(new_record, label)
+    data_manager.write_table_to_file("store/games.csv", table)
+    start_module()
     return table
+    
+
 
 
 def remove(table, id):
@@ -106,10 +112,12 @@ def remove(table, id):
     file_name = "store/games.csv"
     count = 0
     for entry in table:
+        temp_row = entry
         entry = str(entry[0])
         entry_in_list_form = entry.split(",")
         if entry_in_list_form[0] == id[0]:
             new_table = table[:count] + table[count+1:]
+            ui.print_result(temp_row, f"You removed this record")
             data_manager.write_table_to_file(file_name, new_table)
         count += 1
     start_module()
@@ -128,11 +136,20 @@ def update(table, id_):
     Returns:
         list: table with updated record
     """
-
-    # your code
-
-    return table
-
+    id_ = ("".join(map(str, id_)))
+    index_table = 0
+    for row in table:
+        if row[0] == id_:
+            ui.print_result(row, f"This is position what do you want change ")
+            datauser = ui.get_inputs(['input Title: ', 'Choose new manufacturer :  ', "Enter new price", "Change amout of stock in storage"], "Please insert new information")
+            table[index_table][1:] = datauser
+            ui.print_result(table[index_table],f"This is your record after changes")
+        index_table += 1
+    data_manager.write_table_to_file("store/games.csv", table)
+    start_module()
+    
+    return table 
+    
 
 # special functions:
 # ------------------
