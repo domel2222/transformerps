@@ -78,6 +78,7 @@ def show_table(table):
     """
     title_list = ['ID','Month','Day','Year','Type','Amount']
     ui.print_table(table, title_list)
+    start_module()
 
 def add(table):
     """
@@ -89,12 +90,13 @@ def add(table):
     Returns:
         list: Table with a new record
     """
-
+    id_  = common.generate_random(table)
+    title_list = ['Month','Day','Year','Type','Amount']
     title = "Please provide data for new entry:"
-    new_record = ui.get_inputs(title_list, title)
-    table = table + [[";".join(new_record)]]
+    new_entry = ui.get_inputs(title_list, title)
+    table.append([id_, new_entry[0], new_entry[1],new_entry[2],new_entry[3],new_entry[4]])
     data_manager.write_table_to_file(file_name, table)
-
+    start_module()
     return table
 
 
