@@ -30,7 +30,6 @@ def start_module():
         'Last buyer name', 'Last buyer id',
         'Buyer name with the most money spent',
         'Buyer id with the most money spent',
-        'Name of the buyer with most money spent',
         'Show most frequent buyers names', 'Show the most frequent buyers ids'
     ]
     exit_message = "Go back to main menu"
@@ -133,8 +132,27 @@ def get_the_most_frequent_buyers_names(num=1):
         list of tuples: Ordered list of tuples of customer names and num of sales
             The first one bought the most frequent. eg.: [('Genoveva Dingess', 8), ('Missy Stoney', 3)]
     """
+    sales_file_name = "sales/sales.csv"
+    crm_file_name = "crm/customers.csv"
+    label = "the most frequent buyers name is: "
+    sales_table = data_manager.get_table_from_file(sales_file_name)
+    crm_table = data_manager.get_table_from_file(crm_file_name)
+    dict_sales_count = {}
+    for row in sales_table:
+        if row[6] in dict_sales_count.keys():
+            dict_sales_count[row[6]] += 1
+        else:
+            dict_sales_count[row[6]] = 1
+    
+    id_buyer = max(dict_sales_count, key=dict_sales_count.get)
+    
+    name_customer = []
+    for row in crm_table:
+        if row[0] == id_buyer:
+            name_customer.append(row[1])
+    
+    ui.print_result(name_customer[num - 1],label)
 
-    # your code
 
 
 def get_the_most_frequent_buyers_ids(num=1):
@@ -150,4 +168,19 @@ def get_the_most_frequent_buyers_ids(num=1):
             The first one bought the most frequent. eg.: [(aH34Jq#&, 8), (bH34Jq#&, 3)]
     """
 
-    # your code
+    sales_file_name = "sales/sales.csv"
+    label = "the most frequent buyers ids is: "
+
+    sales_table = data_manager.get_table_from_file(sales_file_name)
+    
+    dict_sales_count = {}
+    for row in sales_table:
+        if row[6] in dict_sales_count.keys():
+            dict_sales_count[row[6]] += 1
+        else:
+            dict_sales_count[row[6]] = 1
+    
+    id_buyer = max(dict_sales_count, key=dict_sales_count.get)
+    print(type(id_buyer))
+    ui.print_result(id_buyer,label)
+

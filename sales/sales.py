@@ -20,6 +20,9 @@ import data_manager
 import common
 # main module
 import main
+# datetime module
+import datetime
+
 
 title_list = ["Id", "Title", "Price", "Month", "Day", "Year", "customer_id"]
 file_name = "sales/sales.csv"
@@ -36,14 +39,18 @@ def start_module():
     """
 
     in_menu = True
-
+    
     while in_menu:
         ui.print_menu("Sales", [
             "Show Table", "Add", "Remove", "Update",
-            "Get Lowest Price Item Id", "Show all customers"
+            "Get Lowest Price Item Id", "Show all customers" , 
+            "Show last sold item id",
+            " puste", 
+            "sales_per_customer"
+            
         ], "Back to Main Menu")
-        user_input = ui.get_input_menu(len(
-            title_list))  #asks user to select numbered option from the menu
+
+        user_input = ui.get_input_menu(len(title_list))  #asks user to select numbered option from the menu
         table = data_manager.get_table_from_file(file_name)
         if user_input == 1:
             show_table(data_manager.get_table_from_file(file_name))
@@ -64,8 +71,17 @@ def start_module():
         elif user_input == 6:
             ui.print_result(get_all_customer_ids(), "See all customers below")
             ui.print_result(" ", " ")
-        # elif user_input == 7:
-        #     get_items_sold_between(table)
+        elif user_input == 7:
+            table = data_manager.get_table_from_file(file_name)
+            ui.print_result(get_item_id_sold_last_from_table(table),
+                            "Id of item sold last is:")
+        elif user_input == 8:
+            pass
+
+
+        elif user_input == 9:
+            table = data_manager.get_table_from_file(file_name)
+            get_num_of_sales_per_customer_ids_from_table(table)
         elif user_input == 0:
             main.main()
 
@@ -262,8 +278,13 @@ def get_item_id_sold_last_from_table(table):
     Returns:
         str: the _id_ of the item that was sold most recently.
     """
-
-    # your code
+    dates = []
+    for i, v in enumerate(table):
+        my_date = datetime.date(int(table[i][5]), int(table[i][3]), int(table[i][4]))
+        dates.append(my_date)
+    max_date = str(max(d for d in dates))
+    if (max_date in v for v in table):
+        return v[0]
 
 
 def get_item_title_sold_last_from_table(table):
@@ -425,4 +446,17 @@ def get_num_of_sales_per_customer_ids_from_table(table):
          dict of (key, value): (customer_id (str), num_of_sales (number))
     """
 
-    # your code
+    ID_Clent = 6
+    dict_sales = {}
+
+    for record in table:
+        if record[ID_Clent] in dict_sales:
+            dict_sales[record[ID_Clent]] += 1
+        else:
+            dict_sales[record[ID_Clent]] = 1
+
+    
+    ui.print_result(dict_sales, "Customer id and num of sales")
+    start_module()
+
+
