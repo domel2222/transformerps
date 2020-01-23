@@ -23,7 +23,9 @@ import main
 
 title_list = ["Id", "Title", "Price", "Month", "Day", "Year", "customer_id"]
 file_name = "sales/sales.csv"
-
+title_options = ["Show Table", "Add", "Remove", "Update",
+            "Get Lowest Price Item Id", "Show all customers",
+            "Show ID the of last sale","Show iteams sold between", "Sales per customer" ]
 
 def start_module():
     """
@@ -38,12 +40,9 @@ def start_module():
     in_menu = True
 
     while in_menu:
-        ui.print_menu("Sales", [
-            "Show Table", "Add", "Remove", "Update",
-            "Get Lowest Price Item Id", "Show all customers"
-        ], "Back to Main Menu")
+        ui.print_menu("Sales", title_options, "Back to Main Menu")
         user_input = ui.get_input_menu(len(
-            title_list))  #asks user to select numbered option from the menu
+            title_options))  #asks user to select numbered option from the menu
         table = data_manager.get_table_from_file(file_name)
         if user_input == 1:
             show_table(data_manager.get_table_from_file(file_name))
@@ -64,8 +63,19 @@ def start_module():
         elif user_input == 6:
             ui.print_result(get_all_customer_ids(), "See all customers below")
             ui.print_result(" ", " ")
-        # elif user_input == 7:
-        #     get_items_sold_between(table)
+        elif user_input == 7:
+            print("Udało się ---> 7")
+        elif user_input == 8:
+            data_inputs = ui.get_inputs(["Day from: ","Month from: ", "Year from: ", "Day to: ", "Month to: ","Year to: "], "please enter date from to: " )
+            day_from = data_inputs[0]
+            month_from = data_inputs[1]
+            year_from = data_inputs[2]
+            day_to = data_inputs[3]
+            month_to = data_inputs[4]
+            year_to = data_inputs[5]
+            get_items_sold_between(table, month_from, day_from, year_from, month_to, day_to, year_to)
+        elif user_input == 9:
+            print("Udało się ---> 9")
         elif user_input == 0:
             main.main()
 
@@ -202,8 +212,19 @@ def get_items_sold_between(table, month_from, day_from, year_from, month_to,
     Returns:
         list: list of lists (the filtered table)
     """
+    import time
+    from datatime import date
 
-    # your code
+    DAY_INDEX = 4
+    MONTH_INDEX = 3
+    YEAR_INDEX = 5
+    new_date = []
+    for row in table:
+        new_date.append(date(row[YEAR_INDEX],row[MONTH_INDEX], row[DAY_INDEX]).isoformat())
+
+
+#date(2002, 12, 4).isoformat()
+
 
 
 # functions supports data abalyser
