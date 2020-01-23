@@ -20,6 +20,9 @@ import data_manager
 import common
 # main module
 import main
+# datetime module
+import datetime
+
 
 title_list = ["Id", "Title", "Price", "Month", "Day", "Year", "customer_id"]
 file_name = "sales/sales.csv"
@@ -40,7 +43,8 @@ def start_module():
     while in_menu:
         ui.print_menu("Sales", [
             "Show Table", "Add", "Remove", "Update",
-            "Get Lowest Price Item Id", "Show all customers"
+            "Get Lowest Price Item Id", "Show all customers",
+            "Show last sold item id"
         ], "Back to Main Menu")
         user_input = ui.get_input_menu(len(
             title_list))  #asks user to select numbered option from the menu
@@ -64,7 +68,11 @@ def start_module():
         elif user_input == 6:
             ui.print_result(get_all_customer_ids(), "See all customers below")
             ui.print_result(" ", " ")
-        # elif user_input == 7:
+        elif user_input == 7:
+            table = data_manager.get_table_from_file(file_name)
+            ui.print_result(get_item_id_sold_last_from_table(table),
+                            "Id of item sold last is:")
+        # elif user_input == 8:
         #     get_items_sold_between(table)
         elif user_input == 0:
             main.main()
@@ -262,8 +270,11 @@ def get_item_id_sold_last_from_table(table):
     Returns:
         str: the _id_ of the item that was sold most recently.
     """
-
-    # your code
+    dates = []
+    for i, v in enumerate(table):
+        my_date = datetime.date(int(table[i][5]), int(table[i][3]), int(table[i][4]))
+        dates.append(my_date)
+    return str(max(d for d in dates))
 
 
 def get_item_title_sold_last_from_table(table):
