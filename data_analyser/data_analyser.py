@@ -42,6 +42,8 @@ def start_module():
         start_module()
     elif option == 2:
         get_the_last_buyer_id()
+        ui.print_result(get_the_last_buyer_id(),"The name of the last buyer id is:")
+        start_module()
     elif option == 3:
         ui.print_result(get_the_buyer_name_spent_most_and_the_money_spent(),
                         "The name of customer spent most money is: ")
