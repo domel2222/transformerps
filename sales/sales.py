@@ -78,7 +78,7 @@ def start_module():
             year_to = data_inputs[5]
             get_items_sold_between(table, month_from, day_from, year_from, month_to, day_to, year_to)
         elif user_input == 9:
-            print("Udało się ---> 9")
+            get_num_of_sales_per_customer_ids_from_table(table)
         elif user_input == 0:
             main.main()
 
