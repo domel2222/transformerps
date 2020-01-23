@@ -37,7 +37,9 @@ def start_module():
     ui.print_menu(title, list_options, exit_message)
     option = ui.get_input_menu(len(list_options))
     if option == 1:
-        get_the_last_buyer_name(table)
+        get_the_last_buyer_name()
+        ui.print_result(get_the_last_buyer_name(),"The name of the last customer is:")
+        start_module()
     elif option == 2:
         get_the_last_buyer_id()
     elif option == 3:
@@ -60,17 +62,14 @@ def start_module():
     # your code
 
 
-def get_the_last_buyer_name(table):
+def get_the_last_buyer_name():
     """
     Returns the customer _name_ of the customer made sale last.
 
     Returns:
         str: Customer name of the last buyer
     """
-    table = data_manager.get_table_from_file('crm/customers.csv')
-    for row in table:
-        return row[-1]
-    ui.print_result(table,row, f"This is the last buyer")
+    return crm.get_name_by_id(get_the_last_buyer_id())
     # your code
 
 
@@ -81,7 +80,7 @@ def get_the_last_buyer_id():
     Returns:
         str: Customer id of the last buyer
     """
-
+    return sales.get_customer_id_by_sale_id(sales.get_item_id_sold_last())
     # your code
 
 
@@ -94,11 +93,9 @@ def get_the_buyer_name_spent_most_and_the_money_spent():
     """
     table_crm = data_manager.get_table_from_file("crm/customers.csv")
     max_key = get_the_buyer_id_spent_most_and_the_money_spent()[0]
-
     for index, line in enumerate(table_crm):
         if max_key in line[0]:
             max_index = index
-
     max_money = get_the_buyer_id_spent_most_and_the_money_spent()[1]
     return (table_crm[max_index][1], max_money)
 
@@ -112,14 +109,11 @@ def get_the_buyer_id_spent_most_and_the_money_spent():
     """
     table_sales = data_manager.get_table_from_file("sales/sales.csv")
     cust_sales_dict = {}
-
     for line in table_sales:
         cust_sales_dict[line[6]] = 0
-    
     for line in table_sales:
         if line[6] in cust_sales_dict.keys():
             cust_sales_dict[line[6]] += int(line[2])
-    
     max_key = max(cust_sales_dict, key=cust_sales_dict.get)
     result = tuple((max_key, cust_sales_dict[max_key]))
     return result

@@ -27,7 +27,7 @@ def start_module():
     """
     table = data_manager.get_table_from_file("hr/persons.csv")
     title = "Human Resources Manager"
-    list_options = ["Show Table", "Add new item", "Remove item", "Update item", "Oldest person"]
+    list_options = ["Show Table", "Add new item", "Remove item", "Update item", "Oldest person", "Closest age"]
     exit_message = "Back to main menu"
     ui.print_menu(title, list_options, exit_message)
     # number_of_menu_options = 7
@@ -49,6 +49,10 @@ def start_module():
         table = data_manager.get_table_from_file(file_name)
         (get_oldest_person(table))
 
+    elif user_input == 6:
+        table = data_manager.get_table_from_file(file_name)
+        (get_persons_closest_to_average(table))
+    
     elif user_input == 0:
         main.main()
 
@@ -181,5 +185,26 @@ def get_persons_closest_to_average(table):
     Returns:
         list: list of strings (name or names if there are two more with the same value)
     """
+    
+    sum_year = 0
+    for i in table:
+        sum_year += int(i[2])  # 2 - year of birth
 
-    # your code
+    average_year = (sum_year/len(table))
+
+
+    closest_year = average_year
+    closest_name = []
+    
+    for record in table:
+        subtraction = abs(float(record[2]) - average_year)
+        if subtraction < closest_year: # 2 describe year 
+            closest_name.clear()
+            closest_year = subtraction
+            closest_name.append(record[1]) # 1 - name emploee
+        elif subtraction == closest_year:
+            closest_name.append(record[1])
+
+    ui.print_result(closest_name, "This is the person who has closest age to average")
+    
+    start_module()
