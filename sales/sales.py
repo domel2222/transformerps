@@ -67,16 +67,19 @@ def start_module():
             ui.print_result(get_all_customer_ids(), "See all customers below")
             ui.print_result(" ", " ")
         elif user_input == 7:
-            print("Udało się ---> 7")
+            table = data_manager.get_table_from_file(file_name)
+            ui.print_result(get_item_id_sold_last_from_table(table),
+                            "Id of item sold last is:")
         elif user_input == 8:
-            data_inputs = ui.get_inputs(["Day from: ","Month from: ", "Year from: ", "Day to: ", "Month to: ","Year to: "], "please enter date from to: " )
-            day_from = data_inputs[0]
-            month_from = data_inputs[1]
-            year_from = data_inputs[2]
-            day_to = data_inputs[3]
-            month_to = data_inputs[4]
-            year_to = data_inputs[5]
-            get_items_sold_between(table, month_from, day_from, year_from, month_to, day_to, year_to)
+            pass
+            # data_inputs = ui.get_inputs(["Day from: ","Month from: ", "Year from: ", "Day to: ", "Month to: ","Year to: "], "please enter date from to: " )
+            # day_from = data_inputs[0]
+            # month_from = data_inputs[1]
+            # year_from = data_inputs[2]
+            # day_to = data_inputs[3]
+            # month_to = data_inputs[4]
+            # year_to = data_inputs[5]
+            # get_items_sold_between(table, month_from, day_from, year_from, month_to, day_to, year_to)
         elif user_input == 9:
             get_num_of_sales_per_customer_ids_from_table(table)
         elif user_input == 0:
