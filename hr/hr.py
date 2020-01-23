@@ -85,10 +85,13 @@ def add(table):
 
     list_labels = ["Name and Surname:","Birth date:"]
     title = "Please provide data for new entry"
+    
     new_entry = ui.get_inputs(list_labels, title)
     table.append([id_, new_entry[0], new_entry[1]])
+    
     ui.print_result(table[len(table)-1], f'You add n record')
     data_manager.write_table_to_file("hr/persons.csv", table)
+    
     start_module()
     return table
 
