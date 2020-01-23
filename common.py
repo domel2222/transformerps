@@ -3,6 +3,7 @@ implement commonly used functions here
 """
 
 import random
+import data_manager
 
 
 def generate_random(table):
@@ -41,3 +42,8 @@ def generate_random(table):
                 generate_random(table)
 
     return generated
+
+
+def get_table_from_file(file_name):
+    return data_manager.get_table_from_file(file_name)
+    

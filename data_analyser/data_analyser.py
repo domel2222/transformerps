@@ -13,7 +13,6 @@ import ui
 import common
 from sales import sales
 from crm import crm
-import data_manager
 
 
 def start_module():
@@ -37,7 +36,8 @@ def start_module():
     option = ui.get_input_menu(len(list_options))
     if option == 1:
         get_the_last_buyer_name()
-        ui.print_result(get_the_last_buyer_name(),"The name of the last customer is:")
+        ui.print_result(get_the_last_buyer_name(),
+                        "The name of the last customer is:")
         start_module()
     elif option == 2:
         get_the_last_buyer_id()
@@ -53,8 +53,10 @@ def start_module():
         start_module()
     elif option == 5:
         get_the_most_frequent_buyers_names(num=1)
+        start_module()
     elif option == 6:
         get_the_most_frequent_buyers_ids(num=1)
+        start_module()
     elif option == 0:
         pass
     else:
@@ -92,7 +94,7 @@ def get_the_buyer_name_spent_most_and_the_money_spent():
     Returns:
         tuple: Tuple of customer name and the sum the customer spent eg.: ('Daniele Coach', 42)
     """
-    table_crm = data_manager.get_table_from_file("crm/customers.csv")
+    table_crm = common.get_table_from_file("crm/customers.csv")
     max_key = get_the_buyer_id_spent_most_and_the_money_spent()[0]
     for index, line in enumerate(table_crm):
         if max_key in line[0]:
@@ -108,13 +110,14 @@ def get_the_buyer_id_spent_most_and_the_money_spent():
     Returns:
         tuple: Tuple of customer id and the sum the customer spent eg.: (aH34Jq#&, 42)
     """
-    table_sales = data_manager.get_table_from_file("sales/sales.csv")
+    table_sales = common.get_table_from_file("sales/sales.csv")
+    cust_id_index = 6
     cust_sales_dict = {}
     for line in table_sales:
-        cust_sales_dict[line[6]] = 0
+        cust_sales_dict[line[cust_id_index]] = 0
     for line in table_sales:
-        if line[6] in cust_sales_dict.keys():
-            cust_sales_dict[line[6]] += int(line[2])
+        if line[cust_id_index] in cust_sales_dict.keys():
+            cust_sales_dict[line[cust_id_index]] += int(line[2])
     max_key = max(cust_sales_dict, key=cust_sales_dict.get)
     result = tuple((max_key, cust_sales_dict[max_key]))
     return result
@@ -132,27 +135,24 @@ def get_the_most_frequent_buyers_names(num=1):
         list of tuples: Ordered list of tuples of customer names and num of sales
             The first one bought the most frequent. eg.: [('Genoveva Dingess', 8), ('Missy Stoney', 3)]
     """
-    sales_file_name = "sales/sales.csv"
-    crm_file_name = "crm/customers.csv"
     label = "the most frequent buyers name is: "
-    sales_table = data_manager.get_table_from_file(sales_file_name)
-    crm_table = data_manager.get_table_from_file(crm_file_name)
+    sales_table = common.get_table_from_file("sales/sales.csv")
+    crm_table = common.get_table_from_file("crm/customers.csv")
     dict_sales_count = {}
     for row in sales_table:
         if row[6] in dict_sales_count.keys():
             dict_sales_count[row[6]] += 1
         else:
             dict_sales_count[row[6]] = 1
-    
+
     id_buyer = max(dict_sales_count, key=dict_sales_count.get)
-    
+
     name_customer = []
     for row in crm_table:
         if row[0] == id_buyer:
             name_customer.append(row[1])
-    
-    ui.print_result(name_customer[num - 1],label)
 
+    ui.print_result(name_customer[num - 1], label)
 
 
 def get_the_most_frequent_buyers_ids(num=1):
@@ -168,19 +168,16 @@ def get_the_most_frequent_buyers_ids(num=1):
             The first one bought the most frequent. eg.: [(aH34Jq#&, 8), (bH34Jq#&, 3)]
     """
 
-    sales_file_name = "sales/sales.csv"
     label = "the most frequent buyers ids is: "
+    sales_table = common.get_table_from_file("sales/sales.csv")
 
-    sales_table = data_manager.get_table_from_file(sales_file_name)
-    
     dict_sales_count = {}
     for row in sales_table:
         if row[6] in dict_sales_count.keys():
             dict_sales_count[row[6]] += 1
         else:
             dict_sales_count[row[6]] = 1
-    
+
     id_buyer = max(dict_sales_count, key=dict_sales_count.get)
     print(type(id_buyer))
-    ui.print_result(id_buyer,label)
-
+    ui.print_result(id_buyer, label)

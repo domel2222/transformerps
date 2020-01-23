@@ -16,6 +16,9 @@ import data_manager
 import common
 import main
 
+file_name = "hr/persons.csv"
+
+
 def start_module():
     """
     Starts this module and displays its menu.
@@ -25,26 +28,29 @@ def start_module():
     Returns:
         None
     """
-    table = data_manager.get_table_from_file("hr/persons.csv")
+    table = data_manager.get_table_from_file(file_name)
     title = "Human Resources Manager"
-    list_options = ["Show Table", "Add new item", "Remove item", "Update item", "Oldest person", "Closest age"]
+    list_options = [
+        "Show Table", "Add new item", "Remove item", "Update item",
+        "Oldest person", "Closest age"
+    ]
     exit_message = "Back to main menu"
     ui.print_menu(title, list_options, exit_message)
-    # number_of_menu_options = 7
-    file_name = "hr/persons.csv"
-    user_input = ui.get_input_menu(len(list_options)) # the function asks for number of menu options - 1
+    user_input = ui.get_input_menu(len(list_options))
     if user_input == 1:
         show_table(table)
     elif user_input == 2:
         add(table)
     elif user_input == 3:
-        id_ = ui.get_inputs(['Choose ID which do you want remove: '], "Please provide your personal information")
+        id_ = ui.get_inputs(['Choose ID which do you want remove: '],
+                            "Please provide your personal information")
         remove(table, id_)
-        
+
     elif user_input == 4:
-        id_ = ui.get_inputs(['Choose ID which do want update: '], "Please provide your personal information")
+        id_ = ui.get_inputs(['Choose ID which do want update: '],
+                            "Please provide your personal information")
         update(table, id_)
-        
+
     elif user_input == 5:
         table = data_manager.get_table_from_file(file_name)
         (get_oldest_person(table))
@@ -52,7 +58,7 @@ def start_module():
     elif user_input == 6:
         table = data_manager.get_table_from_file(file_name)
         (get_persons_closest_to_average(table))
-    
+
     elif user_input == 0:
         main.main()
 
@@ -67,9 +73,10 @@ def show_table(table):
     Returns:
         None
     """
-    
-    ui.print_table(table, ["Code","Name and Surname","Birth date"])
+
+    ui.print_table(table, ["Code", "Name and Surname", "Birth date"])
     start_module()
+
 
 def add(table):
     """
@@ -81,17 +88,17 @@ def add(table):
     Returns:
         list: Table with a new record
     """
-    id_  = common.generate_random(table)
+    id_ = common.generate_random(table)
 
-    list_labels = ["Name and Surname:","Birth date:"]
+    list_labels = ["Name and Surname:", "Birth date:"]
     title = "Please provide data for new entry"
-    
+
     new_entry = ui.get_inputs(list_labels, title)
     table.append([id_, new_entry[0], new_entry[1]])
-    
-    ui.print_result(table[len(table)-1], f'You add n record')
-    data_manager.write_table_to_file("hr/persons.csv", table)
-    
+
+    ui.print_result(table[len(table) - 1], f'You add n record')
+    data_manager.write_table_to_file(file_name, table)
+
     start_module()
     return table
 
@@ -107,15 +114,15 @@ def remove(table, id_):
     Returns:
         list: Table without specified record.
     """
-    file_name = "hr/persons.csv"
     id_ = ("".join(map(str, id_)))
 
     for row in table:
         if row[0] == id_:
-            ui.print_result(row, f"This is  employee who  you going to remove ")
+            ui.print_result(row,
+                            f"This is  employee who  you going to remove ")
             table.remove(row)
             ui.print_result(row, f"You removed this record")
-        
+
     data_manager.write_table_to_file(file_name, table)
     start_module()
     return table
@@ -137,18 +144,22 @@ def update(table, id_):
     for row in table:
         if row[0] == id_:
             ui.print_result(row, f"This is  employee which you choose ")
-            datauser = ui.get_inputs(['input your name: ', 'Choose your hire year:  '], "Please insert new information")
+            datauser = ui.get_inputs(
+                ['input your name: ', 'Choose your birth year:  '],
+                "Please insert new information")
             table[index_table][1:] = datauser
-            ui.print_result(table[index_table],f"This is your record after changes")
+            ui.print_result(table[index_table],
+                            f"This is your record after changes")
         index_table += 1
-    data_manager.write_table_to_file("hr/persons.csv", table)
+    data_manager.write_table_to_file(file_name, table)
     start_module()
-    
-    return table 
+
+    return table
 
 
 # special functions:
 # ------------------
+
 
 def get_oldest_person(table):
     """
@@ -160,22 +171,23 @@ def get_oldest_person(table):
     Returns:
         list: A list of strings (name or names if there are two more with the same value)
     """
-    
+
     oldest_person = []
 
     for record in table:
         if not oldest_person:
             oldest_person.append(record)
-        elif record[2] == oldest_person[0][2]:    # 2 describe year of birth form HR table
+        elif record[2] == oldest_person[0][
+                2]:  # 2 describe year of birth form HR table
             oldest_person.append(record)
         elif record[2] < oldest_person[0][2]:
             oldest_person.clear()
             oldest_person.append(record)
-    
-    name_list = [name[1] for name in oldest_person] # 1 describe name person of the list
-    ui.print_result(name_list,f"Olders person of the company")
+
+    name_list = [name[1] for name in oldest_person
+                 ]  # 1 describe name person of the list
+    ui.print_result(name_list, f"Olders person of the company")
     start_module()
-        
 
 
 def get_persons_closest_to_average(table):
@@ -188,26 +200,26 @@ def get_persons_closest_to_average(table):
     Returns:
         list: list of strings (name or names if there are two more with the same value)
     """
-    
+
     sum_year = 0
     for i in table:
         sum_year += int(i[2])  # 2 - year of birth
 
-    average_year = (sum_year/len(table))
-
+    average_year = (sum_year / len(table))
 
     closest_year = average_year
     closest_name = []
-    
+
     for record in table:
         subtraction = abs(float(record[2]) - average_year)
-        if subtraction < closest_year: # 2 describe year 
+        if subtraction < closest_year:  # 2 describe year
             closest_name.clear()
             closest_year = subtraction
-            closest_name.append(record[1]) # 1 - name emploee
+            closest_name.append(record[1])  # 1 - name emploee
         elif subtraction == closest_year:
             closest_name.append(record[1])
 
-    ui.print_result(closest_name, "This is the person who has closest age to average")
-    
+    ui.print_result(closest_name,
+                    "This is the person who has closest age to average")
+
     start_module()
