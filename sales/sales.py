@@ -20,6 +20,9 @@ import data_manager
 import common
 # main module
 import main
+# datetime module
+import datetime
+
 
 title_list = ["Id", "Title", "Price", "Month", "Day", "Year", "customer_id"]
 file_name = "sales/sales.csv"
@@ -38,7 +41,7 @@ def start_module():
     """
 
     in_menu = True
-
+    
     while in_menu:
         ui.print_menu("Sales", title_options, "Back to Main Menu")
         user_input = ui.get_input_menu(len(
@@ -283,8 +286,13 @@ def get_item_id_sold_last_from_table(table):
     Returns:
         str: the _id_ of the item that was sold most recently.
     """
-
-    # your code
+    dates = []
+    for i, v in enumerate(table):
+        my_date = datetime.date(int(table[i][5]), int(table[i][3]), int(table[i][4]))
+        dates.append(my_date)
+    max_date = str(max(d for d in dates))
+    if (max_date in v for v in table):
+        return v[0]
 
 
 def get_item_title_sold_last_from_table(table):
@@ -446,4 +454,17 @@ def get_num_of_sales_per_customer_ids_from_table(table):
          dict of (key, value): (customer_id (str), num_of_sales (number))
     """
 
-    # your code
+    ID_Clent = 6
+    dict_sales = {}
+
+    for record in table:
+        if record[ID_Clent] in dict_sales:
+            dict_sales[record[ID_Clent]] += 1
+        else:
+            dict_sales[record[ID_Clent]] = 1
+
+    
+    ui.print_result(dict_sales, "Customer id and num of sales")
+    start_module()
+
+
