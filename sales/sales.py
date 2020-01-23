@@ -274,7 +274,9 @@ def get_item_id_sold_last_from_table(table):
     for i, v in enumerate(table):
         my_date = datetime.date(int(table[i][5]), int(table[i][3]), int(table[i][4]))
         dates.append(my_date)
-    return str(max(d for d in dates))
+    max_date = str(max(d for d in dates))
+    if (max_date in v for v in table):
+        return v[0]
 
 
 def get_item_title_sold_last_from_table(table):
