@@ -40,10 +40,12 @@ def start_module():
     while in_menu:
         ui.print_menu("Sales", [
             "Show Table", "Add", "Remove", "Update",
-            "Get Lowest Price Item Id", "Show all customers"
+            "Get Lowest Price Item Id", "Show all customers" , 
+            " ", 
+            " ",
+            "sales_per_customer"
         ], "Back to Main Menu")
-        user_input = ui.get_input_menu(len(
-            title_list))  #asks user to select numbered option from the menu
+        user_input = ui.get_input_menu(len(title_list))  #asks user to select numbered option from the menu
         table = data_manager.get_table_from_file(file_name)
         if user_input == 1:
             show_table(data_manager.get_table_from_file(file_name))
@@ -66,9 +68,20 @@ def start_module():
             ui.print_result(" ", " ")
         # elif user_input == 7:
         #     get_items_sold_between(table)
+
+
+
+
+
+
+
+
+        elif user_input == 9:
+            table = data_manager.get_table_from_file(file_name)
+            get_num_of_sales_per_customer_ids_from_table(table)
         elif user_input == 0:
             main.main()
-
+S
 
 def show_table(table):
     """
@@ -425,4 +438,17 @@ def get_num_of_sales_per_customer_ids_from_table(table):
          dict of (key, value): (customer_id (str), num_of_sales (number))
     """
 
-    # your code
+    ID_Clent = 6
+    dict_sales = {}
+
+    for record in table:
+        if record[ID_Clent] in dict_sales:
+            dict_sales[record[ID_Clent]] += 1
+        else:
+            dict_sales[record[ID_Clent]] = 1
+
+    
+    ui.print_result(dict_sales, "Customer id and num of sales")
+    start_module()
+
+
