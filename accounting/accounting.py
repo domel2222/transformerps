@@ -59,6 +59,7 @@ def start_module():
     elif user_input == 5:
         which_year_max(table)
     elif user_input == 6:
+        year = ui.get_inputs(["Year: "], "please, enterthe year")
         avg_amount(table, year)
     elif user_input == 0:
         pass
@@ -198,3 +199,17 @@ def avg_amount(table, year):
     """
 
     # your code
+    profit = 0
+    items_count = len(table)
+    
+    for row in table:
+        if row[3] == year[0]:
+            if row[4]== "in":
+                profit += float(row[5])
+            else:
+                profit -= float(row[5])
+    
+    year_profit = (profit/items_count)
+    label = "In the year " + str(year[0]) + " the average profit was: "
+    ui.print_result(str(year_profit), label)
+    return year_profit
