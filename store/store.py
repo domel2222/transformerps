@@ -50,7 +50,7 @@ def start_module():
             id_ = ui.get_inputs(['Choose ID which do want update: '], "Please provide your personal information")
             update(table, id_)
         elif user_input == 5:
-            get_counts_by_manufacturers(table, id)
+            get_counts_by_manufacturers(table)
         elif user_input == 6:
             get_average_by_manufacturer(table, id)
         elif user_input == 0:
@@ -165,7 +165,15 @@ def get_counts_by_manufacturers(table):
          dict: A dictionary with this structure: { [manufacturer] : [count] }
     """
 
-    # your code
+    count_manufactor = {}
+    for row in table:
+        if row[2] in count_manufactor:
+            count_manufactor[row[2]] += int(row[4]) # 2 manufactor 4 amount 
+        else:
+            count_manufactor[row[2]] = int(row[4])
+
+    ui.print_result(count_manufactor,f"Manufactor counts")
+    start_module()
 
 
 def get_average_by_manufacturer(table, manufacturer):
